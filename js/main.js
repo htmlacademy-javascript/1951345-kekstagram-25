@@ -13,7 +13,7 @@ function getRandomIntegerNumber(startNumber, lastNumber){
 function checkStringLength (currentString, maxLength){
   if(currentString.length <= maxLength){
     return true;
-}
+  }
   return false;
 }
 
