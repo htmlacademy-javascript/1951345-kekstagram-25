@@ -13,10 +13,7 @@ function getRandomIntegerNumber(startNumber, lastNumber) {
 }
 
 function checkStringLength(currentString, maxLength) {
-  if (currentString.length <= maxLength) {
-    return true;
-  }
-  return false;
+  return currentString.length <= maxLength;
 }
 
 getRandomIntegerNumber(1, 5); // Вызовы функций чисто для того что бы прошел авточек, иначе не пропускает
