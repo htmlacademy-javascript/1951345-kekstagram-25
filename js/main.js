@@ -1,9 +1,9 @@
 function getRandomIntegerNumber(startNumber, lastNumber) {
   if (startNumber < 0) {
-    throw new Error('Диапазон не соответствует ТЗ, в диапазоне должны быть числа больше или равные нулю');
+    throw new Error('Ошибка в функции генерации случайного числа: в параметрах присутствуют числа ниже нуля');
   }
   if (startNumber >= lastNumber) {
-    throw new Error('Начальное число диапазона не может быть меньше или равно конечному числу');
+    throw new Error('Ошибка в функции генерации случайного числа: в параметрах начальное число больше конечного');
   }
   const auxStartNumber = Math.ceil(startNumber);
   const auxLastNumber = Math.floor(lastNumber) + 1;
@@ -61,39 +61,37 @@ const RANDOM_DESCRIPTION = [
   'Я сантехник',
   'Я даже не знаю уже кто Я'
 ];
+const getRandomArrayElement = (array) => array[getRandomIntegerNumber(0, array.length-1)];
 
 const createCommentsArray = (numberOfComments) => {
-  let comments = [];
-  let id;
-  let avatar;
-  let message;
-  let name;
+  const comments = [];
+
   for (let i = 1; i <= numberOfComments; i++){
-    id = i;
-    avatar = `img/avatar-${  i  }.svg`;
-    message = RANDOM_COMMENTS[getRandomIntegerNumber(0, 6)];
-    name = RANDOM_NAMES[getRandomIntegerNumber(0, 6)];
     const comment = {
-      id: id,
-      avatar: avatar,
-      message: message,
-      name: name
+      id: i,
+      avatar: `img/avatar-${  getRandomIntegerNumber(1,6)  }.svg`,
+      message: getRandomArrayElement(RANDOM_COMMENTS),
+      name: getRandomArrayElement(RANDOM_NAMES)
     };
     comments.push(comment);
   }
-
+  return comments;
 };
 
-const createKekstaPost = (id, photoId) => {
-  const randomDescriptionIndex = getRandomIntegerNumber(0,RANDOM_DESCRIPTION.length-1);
-  const randomCommentIndex = getRandomIntegerNumber(0, comments.length);
-  return {
-    id: id,
-    url: `photos/${  photoId  }.jpg`,
-    description: RANDOM_DESCRIPTION[randomDescriptionIndex],
-    likes: getRandomIntegerNumber(15, 200),
-    comment: comments[randomCommentIndex],
-  };
+const createKekstaPosts = (numberOfPosts) => {
+  const kekstaPostsArray = [];
+
+  for (let i = 1; i<=numberOfPosts; i++){
+    const kekstaPost = {
+      id: i,
+      url: `photos/${ i }.svg`,
+      likes: getRandomIntegerNumber(15,200),
+      description: getRandomArrayElement(RANDOM_DESCRIPTION),
+      message: createCommentsArray(getRandomIntegerNumber(1,200))
+    };
+    kekstaPostsArray.push(kekstaPost);
+  }
+  return kekstaPostsArray;
 };
 
-createKekstaPost();
+createKekstaPosts(25);
