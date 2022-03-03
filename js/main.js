@@ -61,15 +61,21 @@ const RANDOM_DESCRIPTION = [
   'Я сантехник',
   'Я даже не знаю уже кто Я'
 ];
-const getRandomArrayElement = (array) => array[getRandomIntegerNumber(0, array.length-1)];
+const NUMBER_OF_USERS = 6;
+const NUMBER_OF_RANDOM_COMMENTS = 200;
+const numberOfLikesRange = {
+  startFrom: 15,
+  endOn: 200
+};
+const getRandomArrayElement = (array) => array[getRandomIntegerNumber(0, array.length - 1)];
 
 const createCommentsArray = (numberOfComments) => {
   const comments = [];
 
-  for (let i = 1; i <= numberOfComments; i++){
+  for (let i = 0; i <= numberOfComments - 1; i++){
     const comment = {
-      id: i,
-      avatar: `img/avatar-${  getRandomIntegerNumber(1,6)  }.svg`,
+      id: i + 1,
+      avatar: `img/avatar-${  getRandomIntegerNumber(1,NUMBER_OF_USERS)  }.svg`,
       message: getRandomArrayElement(RANDOM_COMMENTS),
       name: getRandomArrayElement(RANDOM_NAMES)
     };
@@ -81,17 +87,19 @@ const createCommentsArray = (numberOfComments) => {
 const createKekstaPosts = (numberOfPosts) => {
   const kekstaPostsArray = [];
 
-  for (let i = 1; i<=numberOfPosts; i++){
+  for (let i = 0; i <= numberOfPosts - 1; i++){
     const kekstaPost = {
-      id: i,
-      url: `photos/${ i }.svg`,
-      likes: getRandomIntegerNumber(15,200),
+      id: i + 1,
+      url: `photos/${ i + 1 }.svg`,
+      likes: getRandomIntegerNumber(numberOfLikesRange.startFrom,numberOfLikesRange.endOn),
       description: getRandomArrayElement(RANDOM_DESCRIPTION),
-      message: createCommentsArray(getRandomIntegerNumber(1,200))
+      comment: createCommentsArray(getRandomIntegerNumber(1,NUMBER_OF_RANDOM_COMMENTS))
     };
     kekstaPostsArray.push(kekstaPost);
   }
   return kekstaPostsArray;
 };
 
-createKekstaPosts(25);
+const generatedKekstaPostsArray = createKekstaPosts(25);
+
+
