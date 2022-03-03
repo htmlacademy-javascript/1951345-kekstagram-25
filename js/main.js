@@ -100,6 +100,6 @@ const createKekstaPosts = (numberOfPosts) => {
   return kekstaPostsArray;
 };
 
-const generatedKekstaPostsArray = createKekstaPosts(25);
+//const generatedKekstaPostsArray = createKekstaPosts(25);
 
 
