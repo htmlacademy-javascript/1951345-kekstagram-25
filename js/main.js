@@ -1,9 +1,9 @@
-import {createKekstaPosts, NUMBER_OF_KEKSTAPOSTS} from './data.js';
-import { renderKekstaPost } from './render.js';
+import {createKekstaPostsArray, NUMBER_OF_KEKSTAPOSTS} from './data.js';
+import { renderKekstaPosts } from './render.js';
 import './editor.js';
 import './forms.js';
 import './photo_filter.js';
 import './uploader.js';
-const generatedKekstaPostsArray = createKekstaPosts(NUMBER_OF_KEKSTAPOSTS);
-renderKekstaPost(generatedKekstaPostsArray);
+const generatedKekstaPostsArray = createKekstaPostsArray(NUMBER_OF_KEKSTAPOSTS);
+renderKekstaPosts(generatedKekstaPostsArray);
 

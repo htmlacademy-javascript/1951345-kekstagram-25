@@ -75,7 +75,7 @@ const createCommentsArray = (numberOfComments) => {
   return comments;
 };
 
-const createKekstaPosts = (numberOfPosts) => {
+const createKekstaPostsArray = (numberOfPosts) => {
   const kekstaPostsArray = [];
 
   for (let i = 0; i <= numberOfPosts - 1; i++){
@@ -91,4 +91,4 @@ const createKekstaPosts = (numberOfPosts) => {
   return kekstaPostsArray;
 };
 
-export {getRandomArrayElement, createCommentsArray, createKekstaPosts};
+export {getRandomArrayElement, createCommentsArray, createKekstaPostsArray};
