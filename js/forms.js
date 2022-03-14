@@ -32,7 +32,7 @@ hashtags.addEventListener('keyup', ()=>{
         throw new Error ('Хэштеги надо вводить правильно');
       }
       for (let j = 0; j < hashtagsSplit.length; j++){
-        if(hashtagsSplit[i].toUpperCase() === hashtagsSplit[j].toUpperCase() && i != j){
+        if(hashtagsSplit[i].toUpperCase() === hashtagsSplit[j].toUpperCase() && i !== j){
           submitButton.setAttribute('disabled', 'disabled');
           hashtagError.style.display = 'block';
           hashtagError.textContent = 'Нельзя вводить одинаковые хэштеги';
@@ -75,7 +75,7 @@ uploadedImage.addEventListener('change', (evt)=> {
   };
   fileReader.readAsDataURL(target.files[0]);
   document.addEventListener('keydown', (evnt) => {
-    uploadClosebyKeyFunction(evnt)});
+    uploadClosebyKeyFunction(evnt);});
 });
 
 imgUploadCancelButton.addEventListener('click' , ()=> {
