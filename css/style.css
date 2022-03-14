@@ -1403,3 +1403,8 @@ main {
 .hidden {
   display: none;
 }
+
+.error__hashtags, .error__description{
+  color: red;
+  display: none;
+}
