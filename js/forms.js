@@ -9,7 +9,7 @@ const imgUploadCancelButton = document.querySelector('.img-upload__cancel');
 const mainWindow = document.querySelector('body');
 const hashtags = document.querySelector('.text__hashtags');
 const submitButton = document.querySelector('.img-upload__submit');
-const hashtagError =document.querySelector('.error__hashtags');
+const hashtagError = document.querySelector('.error__hashtags');
 const descriptionError = document.querySelector('.error_description');
 const textDescription = document.querySelector('.text__description');
 
@@ -23,7 +23,7 @@ textDescription.addEventListener('change', ()=>{
 hashtags.addEventListener('keyup', ()=>{
   const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/; //регулярка для валидации хэштегов
   const hashtagsSplit = hashtags.value.split(' ');
-  if (hashtags.value != ''){
+  if (hashtags.value !== ''){
     for (let i = 0; i < hashtagsSplit.length; i++){
       if (!re.test(hashtagsSplit[i])){
         submitButton.setAttribute('disabled', 'disabled');
@@ -32,7 +32,7 @@ hashtags.addEventListener('keyup', ()=>{
         throw new Error ('Хэштеги надо вводить правильно');
       }
       for (let j = 0; j < hashtagsSplit.length; j++){
-        if(hashtagsSplit[i].toUpperCase() == hashtagsSplit[j].toUpperCase() && i != j){
+        if(hashtagsSplit[i].toUpperCase() === hashtagsSplit[j].toUpperCase() && i != j){
           submitButton.setAttribute('disabled', 'disabled');
           hashtagError.style.display = 'block';
           hashtagError.textContent = 'Нельзя вводить одинаковые хэштеги';
@@ -51,7 +51,7 @@ hashtags.addEventListener('keyup', ()=>{
   submitButton.removeAttribute('disabled', 'disabled');
 });
 const uploadClosebyKeyFunction = (evnt) => {
-  if(evnt.key == 'Escape'){
+  if(evnt.key === 'Escape'){
     imgUploadOverlay.classList.add('hidden');
   }
 };
