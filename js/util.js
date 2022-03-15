@@ -13,6 +13,10 @@ function checkStringLength(currentString, maxLength) {
   return currentString.length <= maxLength;
 }
 
+function getHashtagsArray (hashtagsString) {
+  return hashtagsString.split(' ');
+}
 const getRandomArrayElement = (array) => array[getRandomIntegerNumber(0, array.length - 1)];
 
-export {getRandomIntegerNumber, checkStringLength, getRandomArrayElement};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+export {getRandomIntegerNumber, checkStringLength, getRandomArrayElement, getHashtagsArray, isEscapeKey};

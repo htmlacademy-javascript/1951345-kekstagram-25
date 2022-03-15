@@ -50,6 +50,7 @@ const numberOfLikesRange = {
   endOn: 200
 };
 const NUMBER_OF_KEKSTAPOSTS = 25;
+const MAX_NUMBER_OF_HASHTAGS = 5;
 export {
   RANDOM_COMMENTS,
   RANDOM_DESCRIPTION,
@@ -57,7 +58,8 @@ export {
   NUMBER_OF_USERS,
   NUMBER_OF_RANDOM_COMMENTS,
   numberOfLikesRange,
-  NUMBER_OF_KEKSTAPOSTS
+  NUMBER_OF_KEKSTAPOSTS,
+  MAX_NUMBER_OF_HASHTAGS
 };
 
 const createCommentsArray = (numberOfComments) => {
