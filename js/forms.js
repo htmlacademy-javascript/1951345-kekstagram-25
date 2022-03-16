@@ -11,19 +11,6 @@ const imgUploadCancelButton = document.querySelector('.img-upload__cancel');
 const mainWindow = document.querySelector('body');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const decriptionInput = document.querySelector('.text__description');
-const ImageUploadForm = document.querySelector('.img-upload__form');
-
-ImageUploadForm.addEventListener('focusin', (evt)=> {
-  if(evt.target === hashtagsInput || evt.target === decriptionInput){
-    document.removeEventListener('keydown', uploadClosebyKeyFunction);
-  }
-});
-
-ImageUploadForm.addEventListener('focusout', (evt)=> {
-  if(evt.target === hashtagsInput || evt.target === decriptionInput){
-    document.addEventListener('keydown', uploadClosebyKeyFunction);
-  }
-});
 
 const toggleUploadedPreview = (option) => {
   if (option === 'show'){
@@ -57,9 +44,10 @@ hashtagsInput.addEventListener('keyup', ()=>{
   hashtagsInput.setCustomValidity('');
 });
 
+const checkFocus = () => document.activeElement !== hashtagsInput && document.activeElement !== decriptionInput;
 
 function uploadClosebyKeyFunction  (evt) {
-  if(isEscapeKey(evt)){
+  if(isEscapeKey(evt)&&checkFocus()){
     toggleUploadedPreview('hide');
   }
 }
