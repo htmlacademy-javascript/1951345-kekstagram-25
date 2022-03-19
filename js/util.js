@@ -19,4 +19,13 @@ function getHashtagsArray (hashtagsString) {
 const getRandomArrayElement = (array) => array[getRandomIntegerNumber(0, array.length - 1)];
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
-export {getRandomIntegerNumber, checkStringLength, getRandomArrayElement, getHashtagsArray, isEscapeKey};
+
+const showBigPicture = () =>{
+  const kekstaPostBigPicture = document.querySelector('.big-picture');
+  const bigPictureCancel = kekstaPostBigPicture.querySelector('.big-picture__cancel');
+  kekstaPostBigPicture.classList.remove('hidden');
+  bigPictureCancel.addEventListener('click', ()=>{
+    kekstaPostBigPicture.classList.add('hidden');
+  })
+};
+export {getRandomIntegerNumber, checkStringLength, getRandomArrayElement, getHashtagsArray, isEscapeKey, showBigPicture};
