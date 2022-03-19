@@ -1,17 +1,15 @@
-import { MAX_NUMBER_OF_HASHTAGS } from './data.js';
-function validateHashtagText (hashtag) {
-  const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-  return re.test(hashtag);
-}
-function validateSimilarHashtags (hashtagsArray) {
-  for (let i = 0; i < hashtagsArray.length; i++){
-    for (let j = 0; j < hashtagsArray.length; j++){
-      if(hashtagsArray[i].toUpperCase() === hashtagsArray[j].toUpperCase() && i !== j){
-        return 0;
-      }
+import { MAX_NUMBER_OF_HASHTAGS, REG_EXP_FOR_HASHTAGS } from './data.js';
+
+function validateHashtagsText (hashtags) {
+  for (let i = 0; i < hashtags.length; i++) {
+    if (!REG_EXP_FOR_HASHTAGS.test(hashtags[i])) {
+      return true;
     }
   }
-  return 1;
+}
+function validateSimilarHashtags (hashtagsArray) {
+  const setOfHashtags = new Set(hashtagsArray);
+  return setOfHashtags.size === hashtagsArray.length;
 }
 
 function validateNumberOfHashtags (hashtagsArray) {
@@ -19,7 +17,7 @@ function validateNumberOfHashtags (hashtagsArray) {
 }
 
 export {
-  validateHashtagText,
+  validateHashtagsText,
   validateSimilarHashtags,
   validateNumberOfHashtags
 };

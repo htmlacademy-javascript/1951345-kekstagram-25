@@ -1,6 +1,7 @@
 
 import { getHashtagsArray, isEscapeKey } from './util.js';
-import { validateHashtagText, validateNumberOfHashtags, validateSimilarHashtags } from './validators.js';
+import { validateHashtagsText, validateNumberOfHashtags, validateSimilarHashtags } from './validators.js';
+import { loadImageToUploadOverlay } from './uploader.js';
 
 const uploadedImage = document.querySelector('.img-upload__input');
 const uploadPreview = document.querySelector('.img-upload__preview');
@@ -12,69 +13,66 @@ const mainWindow = document.querySelector('body');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const decriptionInput = document.querySelector('.text__description');
 
-const toggleUploadedPreview = (option) => {
-  if (option === 'show'){
-    imgUploadOverlay.classList.remove('hidden');
-    mainWindow.classList.add('modal-open');
-  }else {
-    imgUploadOverlay.classList.add('hidden');
-    mainWindow.classList.remove('modal-open');
-    uploadedImage.value = '';
-  }
+
+imgUploadOverlay.show = function () {
+  this.classList.remove('hidden');
+  mainWindow.classList.add('modal-open');
+  document.addEventListener('keydown', uploadClosebyKey);
+  imgUploadCancelButton.addEventListener('click' , uploadClose);
+};
+imgUploadOverlay.hide = function () {
+  this.classList.add('hidden');
+  mainWindow.classList.remove('modal-open');
+  uploadedImage.value = '';
+  document.removeEventListener('keydown', uploadClosebyKey);
+  imgUploadCancelButton.removeEventListener('click' , uploadClose);
 };
 
-hashtagsInput.addEventListener('keyup', ()=>{
+hashtagsInput.addEventListener('keyup', () => {
   const hashtags = getHashtagsArray(hashtagsInput.value);
-  if (hashtagsInput.value){
-    for (let i = 0; i < hashtags.length; i++){
-      if (!validateHashtagText(hashtags[i])){
-        hashtagsInput.setCustomValidity('Неправильный ввод хэштега');
-        throw new Error ('Неправильный ввод хэштега');
-      }
-    }
-    if (!validateSimilarHashtags(hashtags)){
+  switch (hashtagsInput.value.length > 0) {
+    case (validateHashtagsText(hashtags)):
+      hashtagsInput.setCustomValidity('Неправильный ввод хэштега');
+      break;
+    case (!validateSimilarHashtags(hashtags)):
       hashtagsInput.setCustomValidity('Нельзя вводить одинаковые хэштеги');
-      throw new Error ('Нельзя вводить одинаковые хэштеги');
-    }
-    if (validateNumberOfHashtags(hashtags)){
+      break;
+    case (validateNumberOfHashtags(hashtags)):
       hashtagsInput.setCustomValidity('Не больше пяти хэштегов');
-      throw new Error ('Не больше пяти хэштегов');
-    }
+      break;
+    default:
+      hashtagsInput.setCustomValidity('');
   }
-  hashtagsInput.setCustomValidity('');
+  if (hashtagsInput.value.length === 0) {
+    hashtagsInput.setCustomValidity('');
+  }
 });
 
 const checkFocus = () => document.activeElement !== hashtagsInput && document.activeElement !== decriptionInput;
 
-function uploadClosebyKeyFunction  (evt) {
-  if(isEscapeKey(evt)&&checkFocus()){
-    toggleUploadedPreview('hide');
+function uploadClosebyKey  (evt) {
+  if (isEscapeKey(evt)&&checkFocus()) {
+    imgUploadOverlay.hide();
   }
 }
+function uploadClose () {
+  imgUploadOverlay.hide();
+}
 
-imgUploadCancelButton.addEventListener('click' , ()=> {
-  toggleUploadedPreview('hide');
-});
 
-uploadedImage.addEventListener('change', (evt)=> {
+uploadedImage.addEventListener('change', (evt) => {
   const target = evt.target;
   if (!FileReader) {
     throw new Error('Filereader недоступен');
-
   }
   if (!target.files.length) {
     throw new Error('Ничего не загружено');
   }
   const fileReader = new FileReader();
-  fileReader.onload = function() {
-    previewImage.src = fileReader.result;
-    for (let i = 0; i < effectsImagesList.length; i++){
-      effectsImagesList[i].style.backgroundImage = `url("${fileReader.result }")`;
-    }
-    toggleUploadedPreview('show');
-  };
+  fileReader.addEventListener('load', () => {
+    loadImageToUploadOverlay(previewImage, fileReader, effectsImagesList);
+  });
   fileReader.readAsDataURL(target.files[0]);
-  document.addEventListener('keydown', uploadClosebyKeyFunction);
 });
 
-
+export {imgUploadOverlay};

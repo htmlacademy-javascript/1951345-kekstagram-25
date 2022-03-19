@@ -62,10 +62,13 @@ export {
   MAX_NUMBER_OF_HASHTAGS
 };
 
+const REG_EXP_FOR_HASHTAGS = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+const REG_EXP_FOR_HASHTAGS_ARRAY = /\s+/;
+
 const createCommentsArray = (numberOfComments) => {
   const comments = [];
 
-  for (let i = 0; i <= numberOfComments - 1; i++){
+  for (let i = 0; i <= numberOfComments - 1; i++) {
     const comment = {
       id: i + 1,
       avatar: `img/avatar-${  getRandomIntegerNumber(1,NUMBER_OF_USERS)  }.svg`,
@@ -93,4 +96,10 @@ const createKekstaPostsArray = (numberOfPosts) => {
   return kekstaPostsArray;
 };
 
-export {getRandomArrayElement, createCommentsArray, createKekstaPostsArray};
+export {
+  getRandomArrayElement,
+  createCommentsArray,
+  createKekstaPostsArray,
+  REG_EXP_FOR_HASHTAGS,
+  REG_EXP_FOR_HASHTAGS_ARRAY
+};
