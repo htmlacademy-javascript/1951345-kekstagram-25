@@ -14,7 +14,6 @@ const renderComment = (comment) => {
   commentText.textContent = comment.message;
   commentItem.append(commentAvatar);
   commentItem.append(commentText);
-  console.log(commentItem);
   return commentItem;
 };
 
@@ -30,8 +29,8 @@ const renderbigPicture = (kekstaPost) => {
   bigPictureNumberOfLikes.textContent = kekstaPost.likes;
   bigPictureNumberOfComments.textContent = kekstaPost.comment.length;
   bigPictureDescription.textContent = kekstaPost.description;
-  for (let i = 0; i < kekstaPost.comment.length; i++){
-    allCommentsOfPost.append(renderComment(kekstaPost.comment[i]))
+  for (let i = 0; i < kekstaPost.comment.length; i++) {
+    allCommentsOfPost.append(renderComment(kekstaPost.comment[i]));
   }
   bigPictureComments.append(allCommentsOfPost);
 };
