@@ -30,7 +30,10 @@ imgUploadOverlay.hide = function () {
 
 hashtagsInput.addEventListener('keyup', () => {
   const hashtags = getHashtagsArray(hashtagsInput.value);
-  switch (hashtagsInput.value.length > 0) {
+  switch (true) {
+    case (hashtagsInput.value.length === 0):
+      hashtagsInput.setCustomValidity('');
+      break;
     case (validateHashtagsText(hashtags)):
       hashtagsInput.setCustomValidity('Неправильный ввод хэштега');
       break;
@@ -43,9 +46,7 @@ hashtagsInput.addEventListener('keyup', () => {
     default:
       hashtagsInput.setCustomValidity('');
   }
-  if (hashtagsInput.value.length === 0) {
-    hashtagsInput.setCustomValidity('');
-  }
+
 });
 
 const checkFocus = () => document.activeElement !== hashtagsInput && document.activeElement !== decriptionInput;
