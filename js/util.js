@@ -20,12 +20,4 @@ const getRandomArrayElement = (array) => array[getRandomIntegerNumber(0, array.l
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const showBigPicture = () =>{
-  const kekstaPostBigPicture = document.querySelector('.big-picture');
-  const bigPictureCancel = kekstaPostBigPicture.querySelector('.big-picture__cancel');
-  kekstaPostBigPicture.classList.remove('hidden');
-  bigPictureCancel.addEventListener('click', ()=>{
-    kekstaPostBigPicture.classList.add('hidden');
-  })
-};
-export {getRandomIntegerNumber, checkStringLength, getRandomArrayElement, getHashtagsArray, isEscapeKey, showBigPicture};
+export {getRandomIntegerNumber, checkStringLength, getRandomArrayElement, getHashtagsArray, isEscapeKey};

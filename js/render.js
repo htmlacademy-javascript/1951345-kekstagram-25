@@ -1,5 +1,18 @@
-import { showBigPicture } from './util.js';
+const bigPicture = document.querySelector('.big-picture');
+const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
+const bigPictureNumberOfLikes = bigPicture.querySelector('.likes-count');
+const bigPictureNumberOfComments = bigPicture.querySelector('.comments-count');
+const bigPictureComments = bigPicture.querySelector('.social__comments');
+const bigPictureDescription = bigPicture.querySelector('.social__caption');
+const kekstaPostTemplate = document.querySelector('#picture').content;
+const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 
+bigPicture.show = function () {
+  this.classList.remove('hidden');
+  bigPictureCancel.addEventListener('click', ()=>{
+    this.classList.add('hidden');
+  });
+};
 const renderComment = (comment) => {
   const commentItem = document.createElement('li');
   commentItem.classList.add('social__comment');
@@ -18,13 +31,7 @@ const renderComment = (comment) => {
 };
 
 const renderbigPicture = (kekstaPost) => {
-  const bigPicture = document.querySelector('.big-picture');
-  const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
-  const bigPictureNumberOfLikes = bigPicture.querySelector('.likes-count');
-  const bigPictureNumberOfComments = bigPicture.querySelector('.comments-count');
-  const bigPictureComments = bigPicture.querySelector('.social__comments');
   const allCommentsOfPost = document.createDocumentFragment();
-  const bigPictureDescription = bigPicture.querySelector('.social__caption');
   bigPictureImage.src = kekstaPost.url;
   bigPictureNumberOfLikes.textContent = kekstaPost.likes;
   bigPictureNumberOfComments.textContent = kekstaPost.comment.length;
@@ -36,18 +43,17 @@ const renderbigPicture = (kekstaPost) => {
 };
 
 const createKekstaPost = (kekstaPost) => {
-  const kekstaPostTemplate = document.querySelector('#picture').content;
   const kekstaPostToRender = kekstaPostTemplate.cloneNode(true);
   const kekstaPostImage = kekstaPostToRender.querySelector('.picture__img');
-  kekstaPostImage.src = kekstaPost.url;
   const kekstaPostLikes = kekstaPostToRender.querySelector('.picture__likes');
-  kekstaPostLikes.textContent = kekstaPost.likes;
   const kekstaPostComments = kekstaPostToRender.querySelector('.picture__comments');
-  kekstaPostComments.textContent = kekstaPost.comment.length;
   const kekstaPostToRenderLink = kekstaPostToRender.querySelector('a');
+  kekstaPostImage.src = kekstaPost.url;
+  kekstaPostLikes.textContent = kekstaPost.likes;
+  kekstaPostComments.textContent = kekstaPost.comment.length;
   kekstaPostToRenderLink.addEventListener('click', (evt) => {
     evt.preventDefault();
-    showBigPicture();
+    bigPicture.show();
     renderbigPicture(kekstaPost);
   });
   return kekstaPostToRender;
