@@ -13,6 +13,7 @@ bigPicture.show = function () {
     this.classList.add('hidden');
   });
 };
+
 const renderComment = (comment) => {
   const commentItem = document.createElement('li');
   commentItem.classList.add('social__comment');
