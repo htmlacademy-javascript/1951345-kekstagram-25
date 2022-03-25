@@ -47,27 +47,6 @@ imgUploadOverlay.hide = function () {
   document.removeEventListener('keydown', uploadClosebyKey);
   imgUploadCancelButton.removeEventListener('click' , uploadClose);
 };
-/*
-hashtagsInput.addEventListener('keyup', () => {
-  const hashtags = getHashtagsArray(hashtagsInput.value);
-  switch (true) {
-    case (hashtagsInput.value.length === 0):
-      hashtagsInput.setCustomValidity('');
-      break;
-    case (validateHashtagsText(hashtags)):
-      hashtagsInput.setCustomValidity('Неправильный ввод хэштега');
-      break;
-    case (!validateSimilarHashtags(hashtags)):
-      hashtagsInput.setCustomValidity('Нельзя вводить одинаковые хэштеги');
-      break;
-    case (validateNumberOfHashtags(hashtags)):
-      hashtagsInput.setCustomValidity('Не больше пяти хэштегов');
-      break;
-    default:
-      hashtagsInput.setCustomValidity('');
-  }
-
-}); */
 
 const checkFocus = () => document.activeElement !== hashtagsInput && document.activeElement !== decriptionInput;
 
