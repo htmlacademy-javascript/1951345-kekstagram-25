@@ -1,3 +1,5 @@
+import { isEscapeKey } from './util.js';
+
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
 const bigPictureNumberOfLikes = bigPicture.querySelector('.likes-count');
@@ -9,11 +11,20 @@ const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 
 bigPicture.show = function () {
   this.classList.remove('hidden');
-  bigPictureCancel.addEventListener('click', ()=>{
-    this.classList.add('hidden');
-  });
+  bigPictureCancel.addEventListener('click', closeBigPicture);
+  document.addEventListener('keydown', closeBigPictureByKey);
 };
-
+function closeBigPictureByKey (evt) {
+  if (isEscapeKey(evt)) {
+    bigPicture.classList.add('hidden');
+    bigPictureCancel.removeEventListener('click', closeBigPicture);
+    document.removeEventListener('keydown', closeBigPictureByKey);
+  }
+}
+function closeBigPicture () {
+  bigPicture.classList.add('hidden');
+  bigPictureCancel.removeEventListener('click', closeBigPicture);
+}
 const renderComment = (comment) => {
   const commentItem = document.createElement('li');
   commentItem.classList.add('social__comment');
