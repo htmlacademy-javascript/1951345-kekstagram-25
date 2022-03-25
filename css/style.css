@@ -673,7 +673,6 @@ main {
   width: 450px;
 
   margin: 0 auto;
-  margin-bottom: 20px;
   padding: 5px 10px;
 
   font-family: "Open Sans", "Arial", sans-serif;
@@ -688,6 +687,7 @@ main {
   height: 100px;
 
   margin: 0 auto;
+  margin-top: 20px;
   padding: 15px 10px;
 
   font-family: "Open Sans", "Arial", sans-serif;
@@ -1402,4 +1402,24 @@ main {
 
 .hidden {
   display: none;
+}
+
+.text__hashtags-wrapper{
+  display: flex;
+  flex-direction: column;
+}
+.pristine-error{
+  animation-name: showing;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  color: red;
+  margin-bottom: 20;
+}
+@keyframes showing{
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

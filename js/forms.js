@@ -1,8 +1,8 @@
 
 import { getHashtagsArray, isEscapeKey } from './util.js';
-import { validateHashtagsText, validateNumberOfHashtags, validateSimilarHashtags } from './validators.js';
+//import { validateHashtagsText, validateNumberOfHashtags, validateSimilarHashtags } from './validators.js';
 import { loadImageToUploadOverlay } from './uploader.js';
-
+import { validateHashtags } from './validators.js';
 const uploadedImage = document.querySelector('.img-upload__input');
 const uploadPreview = document.querySelector('.img-upload__preview');
 const previewImage = uploadPreview.querySelector('img');
@@ -12,7 +12,27 @@ const imgUploadCancelButton = document.querySelector('.img-upload__cancel');
 const mainWindow = document.querySelector('body');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const decriptionInput = document.querySelector('.text__description');
+const uploadForm = document.querySelector('.img-upload__form');
 
+const pristine = new Pristine(uploadForm, {
+  classTo: 'text__hashtags-wrapper',
+  errorClass: 'form__item--invalid',
+  successClass: 'form__item--valid',
+  errorTextParent: 'text__hashtags-wrapper',
+  errorTextTag: 'span',
+  errorTextClass: 'form__error'
+});
+
+pristine.addValidator(
+  hashtagsInput,
+  validateHashtags,
+  'Нарушены правила заполнения полей хэштега'
+);
+
+uploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  pristine.validate();
+});
 
 imgUploadOverlay.show = function () {
   this.classList.remove('hidden');
@@ -27,7 +47,7 @@ imgUploadOverlay.hide = function () {
   document.removeEventListener('keydown', uploadClosebyKey);
   imgUploadCancelButton.removeEventListener('click' , uploadClose);
 };
-
+/*
 hashtagsInput.addEventListener('keyup', () => {
   const hashtags = getHashtagsArray(hashtagsInput.value);
   switch (true) {
@@ -47,7 +67,7 @@ hashtagsInput.addEventListener('keyup', () => {
       hashtagsInput.setCustomValidity('');
   }
 
-});
+}); */
 
 const checkFocus = () => document.activeElement !== hashtagsInput && document.activeElement !== decriptionInput;
 
