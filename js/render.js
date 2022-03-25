@@ -14,16 +14,18 @@ bigPicture.show = function () {
   bigPictureCancel.addEventListener('click', closeBigPicture);
   document.addEventListener('keydown', closeBigPictureByKey);
 };
+bigPicture.close = function () {
+  this.classList.add('hidden');
+  bigPictureCancel.removeEventListener('click', closeBigPicture);
+  document.removeEventListener('keydown', closeBigPictureByKey);
+};
 function closeBigPictureByKey (evt) {
   if (isEscapeKey(evt)) {
-    bigPicture.classList.add('hidden');
-    bigPictureCancel.removeEventListener('click', closeBigPicture);
-    document.removeEventListener('keydown', closeBigPictureByKey);
+    bigPicture.close();
   }
 }
 function closeBigPicture () {
-  bigPicture.classList.add('hidden');
-  bigPictureCancel.removeEventListener('click', closeBigPicture);
+  bigPicture.close();
 }
 const renderComment = (comment) => {
   const commentItem = document.createElement('li');
