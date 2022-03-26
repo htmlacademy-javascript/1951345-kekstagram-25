@@ -9,24 +9,23 @@ const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const kekstaPostTemplate = document.querySelector('#picture').content;
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 
-bigPicture.show = function () {
-  this.classList.remove('hidden');
-  bigPictureCancel.addEventListener('click', closeBigPicture);
-  document.addEventListener('keydown', closeBigPictureByKey);
+const onCloseBtnClick = () => {
+  bigPicture.classList.add('hidden');
+  document.removeEventListener('keydown', onEscapeKeydown);
 };
-bigPicture.close = function () {
-  this.classList.add('hidden');
-  bigPictureCancel.removeEventListener('click', closeBigPicture);
-  document.removeEventListener('keydown', closeBigPictureByKey);
+
+const showBigPicture = () => {
+  bigPicture.classList.remove('hidden');
+  bigPictureCancel.addEventListener('click', onCloseBtnClick);
+  document.addEventListener('keydown', onEscapeKeydown);
 };
-function closeBigPictureByKey (evt) {
+
+function onEscapeKeydown (evt) {
   if (isEscapeKey(evt)) {
-    bigPicture.close();
+    onCloseBtnClick();
   }
 }
-function closeBigPicture () {
-  bigPicture.close();
-}
+
 const renderComment = (comment) => {
   const commentItem = document.createElement('li');
   commentItem.classList.add('social__comment');
@@ -67,7 +66,7 @@ const createKekstaPost = (kekstaPost) => {
   kekstaPostComments.textContent = kekstaPost.comment.length;
   kekstaPostToRenderLink.addEventListener('click', (evt) => {
     evt.preventDefault();
-    bigPicture.show();
+    showBigPicture();
     renderbigPicture(kekstaPost);
   });
   return kekstaPostToRender;
