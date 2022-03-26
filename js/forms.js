@@ -33,31 +33,27 @@ uploadForm.addEventListener('submit', (evt) => {
   pristine.validate();
 });
 
-imgUploadOverlay.show = function () {
-  this.classList.remove('hidden');
-  mainWindow.classList.add('modal-open');
-  document.addEventListener('keydown', uploadClosebyKey);
-  imgUploadCancelButton.addEventListener('click' , uploadClose);
-};
-imgUploadOverlay.hide = function () {
-  this.classList.add('hidden');
+const onCancelBtnClick =  () => {
+  imgUploadOverlay.classList.add('hidden');
   mainWindow.classList.remove('modal-open');
   uploadedImage.value = '';
-  document.removeEventListener('keydown', uploadClosebyKey);
-  imgUploadCancelButton.removeEventListener('click' , uploadClose);
+  document.removeEventListener('keydown', onEscapeKeyup);
+};
+
+const showImgUploadOverlay =  () => {
+  imgUploadOverlay.classList.remove('hidden');
+  mainWindow.classList.add('modal-open');
+  document.addEventListener('keydown', onEscapeKeyup);
+  imgUploadCancelButton.addEventListener('click' , onCancelBtnClick);
 };
 
 const checkFocus = () => document.activeElement !== hashtagsInput && document.activeElement !== decriptionInput;
 
-function uploadClosebyKey  (evt) {
+function onEscapeKeyup  (evt) {
   if (isEscapeKey(evt)&&checkFocus()) {
-    imgUploadOverlay.hide();
+    onCancelBtnClick();
   }
 }
-function uploadClose () {
-  imgUploadOverlay.hide();
-}
-
 
 uploadedImage.addEventListener('change', (evt) => {
   const target = evt.target;
@@ -74,4 +70,4 @@ uploadedImage.addEventListener('change', (evt) => {
   fileReader.readAsDataURL(target.files[0]);
 });
 
-export {imgUploadOverlay};
+export {showImgUploadOverlay};
