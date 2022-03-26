@@ -1,6 +1,5 @@
 
-import { getHashtagsArray, isEscapeKey } from './util.js';
-//import { validateHashtagsText, validateNumberOfHashtags, validateSimilarHashtags } from './validators.js';
+import {  isEscapeKey } from './util.js';
 import { loadImageToUploadOverlay } from './uploader.js';
 import { validateHashtags } from './validators.js';
 const uploadedImage = document.querySelector('.img-upload__input');

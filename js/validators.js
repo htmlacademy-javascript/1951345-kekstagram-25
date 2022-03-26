@@ -32,7 +32,7 @@ const validateHashtags = (value) => {
     default:
       return true;
   }
-}
+};
 
 export {
   validateHashtags
