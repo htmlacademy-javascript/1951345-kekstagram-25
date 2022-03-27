@@ -8,16 +8,22 @@ const bigPictureComments = bigPicture.querySelector('.social__comments');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const kekstaPostTemplate = document.querySelector('#picture').content;
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
+const commentsLoader = bigPicture.querySelector('.social__comments-loader');
 
 const onCloseBtnClick = () => {
   bigPicture.classList.add('hidden');
   document.removeEventListener('keydown', onEscapeKeydown);
 };
 
+const showCommentLoader = () => {
+  commentsLoader.classList.remove('hidden');
+};
+
 const showBigPicture = () => {
   bigPicture.classList.remove('hidden');
   bigPictureCancel.addEventListener('click', onCloseBtnClick);
   document.addEventListener('keydown', onEscapeKeydown);
+  showCommentLoader();
 };
 
 function onEscapeKeydown (evt) {
@@ -42,7 +48,12 @@ const renderComment = (comment) => {
   commentItem.append(commentText);
   return commentItem;
 };
-
+const clearComments = () => {
+  const commentsToClear = bigPictureComments.querySelectorAll('li');
+  for (let i = 0; i < commentsToClear.length; i++){
+    commentsToClear[i].remove();
+  }
+};
 const renderbigPicture = (kekstaPost) => {
   const allCommentsOfPost = document.createDocumentFragment();
   bigPictureImage.src = kekstaPost.url;
@@ -50,10 +61,37 @@ const renderbigPicture = (kekstaPost) => {
   bigPictureNumberOfComments.textContent = kekstaPost.comment.length;
   bigPictureDescription.textContent = kekstaPost.description;
   for (let i = 0; i < kekstaPost.comment.length; i++) {
-    allCommentsOfPost.append(renderComment(kekstaPost.comment[i]));
+    const comment = renderComment(kekstaPost.comment[i]);
+    if (i > 4){
+      comment.classList.add('hidden');
+    }
+    allCommentsOfPost.append(comment);
   }
+  clearComments();
   bigPictureComments.append(allCommentsOfPost);
 };
+
+const hideCommentLoader = () => {
+  commentsLoader.classList.add('hidden');
+};
+
+
+const onLoadMoreClick = () => {
+  const hiddenComments = bigPictureComments.querySelectorAll('.hidden');
+  console.log(shownComments);
+  if (hiddenComments.length > 5){
+    for (let i = 0; i < 5; i++){
+      hiddenComments[i].classList.remove('hidden');
+    }
+  } else {
+    for (let i = 0; i < hiddenComments.length; i++){
+      hiddenComments[i].classList.remove('hidden');
+      hideCommentLoader();
+    }
+  }
+};
+
+commentsLoader.addEventListener('click', onLoadMoreClick);
 
 const createKekstaPost = (kekstaPost) => {
   const kekstaPostToRender = kekstaPostTemplate.cloneNode(true);

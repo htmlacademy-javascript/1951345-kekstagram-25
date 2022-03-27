@@ -44,7 +44,7 @@ const RANDOM_DESCRIPTION = [
   'Я даже не знаю уже кто Я'
 ];
 const NUMBER_OF_USERS = 6;
-const NUMBER_OF_RANDOM_COMMENTS = 200;
+const NUMBER_OF_RANDOM_COMMENTS = 23;
 const numberOfLikesRange = {
   startFrom: 15,
   endOn: 200
