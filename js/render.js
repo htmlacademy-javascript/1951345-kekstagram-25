@@ -9,6 +9,7 @@ const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const kekstaPostTemplate = document.querySelector('#picture').content;
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const commentsLoader = bigPicture.querySelector('.social__comments-loader');
+const shownCommentsCount = bigPicture.querySelector('.comments-shown');
 
 const onCloseBtnClick = () => {
   bigPicture.classList.add('hidden');
@@ -50,7 +51,7 @@ const renderComment = (comment) => {
 };
 const clearComments = () => {
   const commentsToClear = bigPictureComments.querySelectorAll('li');
-  for (let i = 0; i < commentsToClear.length; i++){
+  for (let i = 0; i < commentsToClear.length; i++) {
     commentsToClear[i].remove();
   }
 };
@@ -68,6 +69,13 @@ const renderbigPicture = (kekstaPost) => {
     allCommentsOfPost.append(comment);
   }
   clearComments();
+  if (kekstaPost.comment.length > 4){
+    shownCommentsCount.textContent = 5;
+  } else {
+    shownCommentsCount.textContent = kekstaPost.comment.length;
+    commentsLoader.classList.add('hidden');
+  }
+
   bigPictureComments.append(allCommentsOfPost);
 };
 
@@ -78,17 +86,20 @@ const hideCommentLoader = () => {
 
 const onLoadMoreClick = () => {
   const hiddenComments = bigPictureComments.querySelectorAll('.hidden');
-  console.log(shownComments);
+
   if (hiddenComments.length > 5){
     for (let i = 0; i < 5; i++){
       hiddenComments[i].classList.remove('hidden');
     }
+    shownCommentsCount.textContent = Number(shownCommentsCount.textContent) + 5;
   } else {
     for (let i = 0; i < hiddenComments.length; i++){
       hiddenComments[i].classList.remove('hidden');
       hideCommentLoader();
     }
+    shownCommentsCount.textContent = Number(shownCommentsCount.textContent) + hiddenComments.length;
   }
+
 };
 
 commentsLoader.addEventListener('click', onLoadMoreClick);

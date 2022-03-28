@@ -37,13 +37,13 @@ const onCancelBtnClick =  () => {
   imgUploadOverlay.classList.add('hidden');
   mainWindow.classList.remove('modal-open');
   uploadedImage.value = '';
-  document.removeEventListener('keydown', onEscapeKeyup);
+  document.removeEventListener('keyup', onEscapeKeyup);
 };
 
 const showImgUploadOverlay =  () => {
   imgUploadOverlay.classList.remove('hidden');
   mainWindow.classList.add('modal-open');
-  document.addEventListener('keydown', onEscapeKeyup);
+  document.addEventListener('keydup', onEscapeKeyup);
   imgUploadCancelButton.addEventListener('click' , onCancelBtnClick);
 };
 
