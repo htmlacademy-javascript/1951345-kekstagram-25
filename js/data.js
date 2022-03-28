@@ -96,7 +96,62 @@ const createKekstaPostsArray = (numberOfPosts) => {
   return kekstaPostsArray;
 };
 
+const chrome = {
+  range: {
+    min: 0,
+    max: 1,
+  },
+  start: 0,
+  step: 0.1,
+  connect: 'lower',
+};
+
+const sepia = {
+  range: {
+    min: 0,
+    max: 1,
+  },
+  start: 0,
+  step: 0.1,
+  connect: 'lower',
+};
+
+const marvin = {
+  range: {
+    min: 0,
+    max: 100,
+  },
+  start: 0,
+  step: 1,
+  connect: 'lower',
+};
+
+const phobos = {
+  range: {
+    min: 0,
+    max: 3,
+  },
+  start: 0,
+  step: 0.1,
+  connect: 'lower',
+};
+
+const heat = {
+  range: {
+    min: 0,
+    max: 3,
+  },
+  start: 1,
+  step: 0.1,
+  connect: 'lower',
+};
+
 export {
+  chrome,
+  sepia,
+  marvin,
+  phobos,
+  heat,
   getRandomArrayElement,
   createCommentsArray,
   createKekstaPostsArray,
