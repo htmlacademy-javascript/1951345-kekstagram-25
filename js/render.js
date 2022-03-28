@@ -87,13 +87,13 @@ const hideCommentLoader = () => {
 const onLoadMoreClick = () => {
   const hiddenComments = bigPictureComments.querySelectorAll('.hidden');
 
-  if (hiddenComments.length > 5){
-    for (let i = 0; i < 5; i++){
+  if (hiddenComments.length > 5) {
+    for (let i = 0; i < 5; i++) {
       hiddenComments[i].classList.remove('hidden');
     }
     shownCommentsCount.textContent = Number(shownCommentsCount.textContent) + 5;
   } else {
-    for (let i = 0; i < hiddenComments.length; i++){
+    for (let i = 0; i < hiddenComments.length; i++) {
       hiddenComments[i].classList.remove('hidden');
       hideCommentLoader();
     }
