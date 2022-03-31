@@ -1,5 +1,5 @@
 import { previewImage } from './forms.js';
-import { chrome, sepia, marvin, phobos, heat } from './data.js';
+import { photoFilters } from './data.js';
 import { imgUploadEffectLevel } from './forms.js';
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectsList = document.querySelectorAll('.effects__radio');
@@ -34,56 +34,26 @@ noUiSlider.create(sliderElement, {
   step: 1,
   connect: 'lower',
 });
-let contentBefore;
-let contentAfter;
+
 sliderElement.noUiSlider.on('update', () => {
-  previewImage.style.filter = contentBefore + sliderElement.noUiSlider.get() + contentAfter;
+  previewImage.style.filter = photoFilters.getTotalString(sliderElement.noUiSlider.get());
   effectLevelValue.value = sliderElement.noUiSlider.get();
 });
 
+const updateFilterSetting = (photoFilter) => {
+  previewImage.style.filter = 'none';
+  photoFilters.property = photoFilters[photoFilter].name;
+  sliderElement.noUiSlider.updateOptions(photoFilters[photoFilter]);
+  imgUploadEffectLevel.classList.remove('hidden');
+};
 for(let i = 0; i < effectsList.length; i++){
   effectsList[i].addEventListener('click', (evt) => {
-    switch(true){
-      case (evt.target.id === 'effect-none'):
-        previewImage.style.filter = 'none';
-        imgUploadEffectLevel.classList.add('hidden');
-        break;
-      case (evt.target.id === 'effect-chrome'):
-        previewImage.style.filter = 'none';
-        contentBefore = 'grayscale(';
-        contentAfter = ')';
-        sliderElement.noUiSlider.updateOptions(chrome);
-        imgUploadEffectLevel.classList.remove('hidden');
-        break;
-      case (evt.target.id === 'effect-sepia'):
-        previewImage.style.filter = 'none';
-        contentBefore = 'sepia(';
-        contentAfter = ')';
-        sliderElement.noUiSlider.updateOptions(sepia);
-        imgUploadEffectLevel.classList.remove('hidden');
-        break;
-      case (evt.target.id === 'effect-marvin'):
-        previewImage.style.filter = 'none';
-        contentBefore = 'invert(';
-        contentAfter = '%)';
-        sliderElement.noUiSlider.updateOptions(marvin);
-        imgUploadEffectLevel.classList.remove('hidden');
-        break;
-      case (evt.target.id === 'effect-phobos'):
-        previewImage.style.filter = 'none';
-        contentBefore = 'blur(';
-        contentAfter = 'px)';
-        sliderElement.noUiSlider.updateOptions(phobos);
-        imgUploadEffectLevel.classList.remove('hidden');
-        break;
-      case (evt.target.id === 'effect-heat'):
-        previewImage.style.filter = 'none';
-        contentBefore = 'brightness(';
-        contentAfter = ')';
-        sliderElement.noUiSlider.updateOptions(heat);
-        imgUploadEffectLevel.classList.remove('hidden');
-        break;
+    const photoFilter = evt.target.id.split('-')[1];
+    if (evt.target.id === 'effect-none'){
+      previewImage.style.filter = 'none';
+      imgUploadEffectLevel.classList.add('hidden');
     }
+    updateFilterSetting(photoFilter);
   });
 }
 

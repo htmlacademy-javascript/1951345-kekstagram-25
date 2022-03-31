@@ -96,62 +96,72 @@ const createKekstaPostsArray = (numberOfPosts) => {
   return kekstaPostsArray;
 };
 
-const chrome = {
-  range: {
-    min: 0,
-    max: 1,
+const photoFilters = {
+  chrome : {
+    name: 'grayscale',
+    range: {
+      min: 0,
+      max: 1,
+    },
+    start: 0,
+    step: 0.1,
+    connect: 'lower',
   },
-  start: 0,
-  step: 0.1,
-  connect: 'lower',
-};
-
-const sepia = {
-  range: {
-    min: 0,
-    max: 1,
+  sepia : {
+    name: 'sepia',
+    range: {
+      min: 0,
+      max: 1,
+    },
+    start: 0,
+    step: 0.1,
+    connect: 'lower',
   },
-  start: 0,
-  step: 0.1,
-  connect: 'lower',
-};
-
-const marvin = {
-  range: {
-    min: 0,
-    max: 100,
+  marvin : {
+    name: 'invert',
+    range: {
+      min: 0,
+      max: 100,
+    },
+    start: 0,
+    step: 1,
+    connect: 'lower',
   },
-  start: 0,
-  step: 1,
-  connect: 'lower',
-};
-
-const phobos = {
-  range: {
-    min: 0,
-    max: 3,
+  phobos : {
+    name: 'blur',
+    range: {
+      min: 0,
+      max: 3,
+    },
+    start: 0,
+    step: 0.1,
+    connect: 'lower',
   },
-  start: 0,
-  step: 0.1,
-  connect: 'lower',
-};
-
-const heat = {
-  range: {
-    min: 0,
-    max: 3,
+  heat : {
+    name: 'brightness',
+    range: {
+      min: 0,
+      max: 3,
+    },
+    start: 1,
+    step: 0.1,
+    connect: 'lower',
   },
-  start: 1,
-  step: 0.1,
-  connect: 'lower',
+  none: 'none',
+  property: '',
+  getTotalString: function (variable){
+    if (photoFilters.property === 'marvin'){
+      return `${photoFilters.property  }(${  variable  }%)`;
+    }
+    if (photoFilters.property === 'phobos'){
+      return `${photoFilters.property  }(${  variable  }px)`;
+    }
+    return `${photoFilters.property  }(${  variable  })`;
+  }
 };
 
 export {
-  chrome,
-  sepia,
-  marvin,
-  phobos,
-  heat,
+  photoFilters,
   getRandomArrayElement,
   createCommentsArray,
   createKekstaPostsArray,
