@@ -49,11 +49,11 @@ const updateFilterSetting = (photoFilter) => {
 for(let i = 0; i < effectsList.length; i++){
   effectsList[i].addEventListener('click', (evt) => {
     const photoFilter = evt.target.id.split('-')[1];
+    updateFilterSetting(photoFilter);
     if (evt.target.id === 'effect-none'){
       previewImage.style.filter = 'none';
       imgUploadEffectLevel.classList.add('hidden');
     }
-    updateFilterSetting(photoFilter);
   });
 }
 

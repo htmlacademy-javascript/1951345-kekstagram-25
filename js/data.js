@@ -150,10 +150,10 @@ const photoFilters = {
   none: 'none',
   property: '',
   getTotalString: function (variable){
-    if (photoFilters.property === 'marvin'){
+    if (photoFilters.property === 'invert'){
       return `${photoFilters.property  }(${  variable  }%)`;
     }
-    if (photoFilters.property === 'phobos'){
+    if (photoFilters.property === 'blur'){
       return `${photoFilters.property  }(${  variable  }px)`;
     }
     return `${photoFilters.property  }(${  variable  })`;
