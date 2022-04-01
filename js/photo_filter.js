@@ -1,5 +1,5 @@
 import { previewImage } from './forms.js';
-import { photoFilters } from './data.js';
+import { photoFilters, SCALE_MAX_SIZE, SCALE_MIN_SIZE, SCALE_STEP, NON_EFFECT_FIELD_ID } from './data.js';
 import { imgUploadEffectLevel } from './forms.js';
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectsList = document.querySelectorAll('.effects__radio');
@@ -10,16 +10,16 @@ const scaleControlValue = document.querySelector('.scale__control--value');
 let scale = 1;
 
 scaleBiggerButton.addEventListener('click', () => {
-  if(scale < 1){
-    scale +=0.25;
+  if(scale < SCALE_MAX_SIZE){
+    scale +=SCALE_STEP;
     scaleControlValue.value = `${scale*100}%`;
     previewImage.style.transform = `scale(${scale})`;
   }
 });
 
 scaleSmallerButton.addEventListener('click', () => {
-  if(scale > 0.25){
-    scale -=0.25;
+  if(scale > SCALE_MIN_SIZE){
+    scale -=SCALE_STEP;
     scaleControlValue.value = `${scale*100 }%`;
     previewImage.style.transform = `scale(${scale})`;
   }
@@ -50,7 +50,7 @@ for(let i = 0; i < effectsList.length; i++){
   effectsList[i].addEventListener('click', (evt) => {
     const photoFilter = evt.target.id.split('-')[1];
     updateFilterSetting(photoFilter);
-    if (evt.target.id === 'effect-none'){
+    if (evt.target.id === NON_EFFECT_FIELD_ID){
       previewImage.style.filter = 'none';
       imgUploadEffectLevel.classList.add('hidden');
     }

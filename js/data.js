@@ -96,6 +96,10 @@ const createKekstaPostsArray = (numberOfPosts) => {
   return kekstaPostsArray;
 };
 
+const SCALE_MIN_SIZE = 0.25;
+const SCALE_MAX_SIZE = 1;
+const SCALE_STEP = 0.25;
+const NON_EFFECT_FIELD_ID = 'effect-none';
 const photoFilters = {
   chrome : {
     name: 'grayscale',
@@ -103,7 +107,7 @@ const photoFilters = {
       min: 0,
       max: 1,
     },
-    start: 0,
+    start: 1,
     step: 0.1,
     connect: 'lower',
   },
@@ -113,7 +117,7 @@ const photoFilters = {
       min: 0,
       max: 1,
     },
-    start: 0,
+    start: 1,
     step: 0.1,
     connect: 'lower',
   },
@@ -123,7 +127,7 @@ const photoFilters = {
       min: 0,
       max: 100,
     },
-    start: 0,
+    start: 100,
     step: 1,
     connect: 'lower',
   },
@@ -133,7 +137,7 @@ const photoFilters = {
       min: 0,
       max: 3,
     },
-    start: 0,
+    start: 3,
     step: 0.1,
     connect: 'lower',
   },
@@ -143,20 +147,21 @@ const photoFilters = {
       min: 0,
       max: 3,
     },
-    start: 1,
+    start: 3,
     step: 0.1,
     connect: 'lower',
   },
   none: 'none',
   property: '',
   getTotalString: function (variable){
-    if (photoFilters.property === 'invert'){
-      return `${photoFilters.property  }(${  variable  }%)`;
+    switch(true){
+      case (photoFilters.property === photoFilters.marvin.name):
+        return `${photoFilters.property  }(${  variable  }%)`;
+      case (photoFilters.property === photoFilters.phobos.name):
+        return `${photoFilters.property  }(${  variable  }px)`;
+      default:
+        return `${photoFilters.property  }(${  variable  })`;
     }
-    if (photoFilters.property === 'blur'){
-      return `${photoFilters.property  }(${  variable  }px)`;
-    }
-    return `${photoFilters.property  }(${  variable  })`;
   }
 };
 
@@ -166,5 +171,9 @@ export {
   createCommentsArray,
   createKekstaPostsArray,
   REG_EXP_FOR_HASHTAGS,
-  REG_EXP_FOR_HASHTAGS_ARRAY
+  REG_EXP_FOR_HASHTAGS_ARRAY,
+  SCALE_MAX_SIZE,
+  SCALE_MIN_SIZE,
+  SCALE_STEP,
+  NON_EFFECT_FIELD_ID
 };
