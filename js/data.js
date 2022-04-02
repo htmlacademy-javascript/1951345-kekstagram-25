@@ -44,13 +44,15 @@ const RANDOM_DESCRIPTION = [
   'Я даже не знаю уже кто Я'
 ];
 const NUMBER_OF_USERS = 6;
-const NUMBER_OF_RANDOM_COMMENTS = 200;
+const NUMBER_OF_RANDOM_COMMENTS = 23;
 const numberOfLikesRange = {
   startFrom: 15,
   endOn: 200
 };
 const NUMBER_OF_KEKSTAPOSTS = 25;
 const MAX_NUMBER_OF_HASHTAGS = 5;
+const FIRSTABLE_SHOWN_COMMENTS = 5;
+const COMMENTS_TO_SHOW = 5;
 export {
   RANDOM_COMMENTS,
   RANDOM_DESCRIPTION,
@@ -59,7 +61,9 @@ export {
   NUMBER_OF_RANDOM_COMMENTS,
   numberOfLikesRange,
   NUMBER_OF_KEKSTAPOSTS,
-  MAX_NUMBER_OF_HASHTAGS
+  MAX_NUMBER_OF_HASHTAGS,
+  FIRSTABLE_SHOWN_COMMENTS,
+  COMMENTS_TO_SHOW,
 };
 
 const REG_EXP_FOR_HASHTAGS = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;

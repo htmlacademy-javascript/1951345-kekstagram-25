@@ -22,13 +22,10 @@ function validateNumberOfHashtags (hashtagsArray) {
 
 const validateHashtags = (value) => {
   const hashtags = getHashtagsArray(value);
-  if (validateHashtagsText(hashtags)
+  return !(validateHashtagsText(hashtags)
       || !validateSimilarHashtags(hashtags)
       || validateNumberOfHashtags(hashtags)
-  ) {
-    return false;
-  }
-  return true;
+  );
 };
 
 export {

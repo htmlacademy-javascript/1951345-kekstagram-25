@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-
+import { COMMENTS_TO_SHOW, FIRSTABLE_SHOWN_COMMENTS } from './data.js';
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
 const bigPictureNumberOfLikes = bigPicture.querySelector('.likes-count');
@@ -8,16 +8,23 @@ const bigPictureComments = bigPicture.querySelector('.social__comments');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const kekstaPostTemplate = document.querySelector('#picture').content;
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
+const commentsLoader = bigPicture.querySelector('.social__comments-loader');
+const shownCommentsCount = bigPicture.querySelector('.comments-shown');
 
 const onCloseBtnClick = () => {
   bigPicture.classList.add('hidden');
   document.removeEventListener('keydown', onEscapeKeydown);
 };
 
+const showCommentLoader = () => {
+  commentsLoader.classList.remove('hidden');
+};
+
 const showBigPicture = () => {
   bigPicture.classList.remove('hidden');
   bigPictureCancel.addEventListener('click', onCloseBtnClick);
   document.addEventListener('keydown', onEscapeKeydown);
+  showCommentLoader();
 };
 
 function onEscapeKeydown (evt) {
@@ -42,7 +49,12 @@ const renderComment = (comment) => {
   commentItem.append(commentText);
   return commentItem;
 };
-
+const clearComments = () => {
+  const commentsToClear = bigPictureComments.querySelectorAll('li');
+  for (let i = 0; i < commentsToClear.length; i++) {
+    commentsToClear[i].remove();
+  }
+};
 const renderbigPicture = (kekstaPost) => {
   const allCommentsOfPost = document.createDocumentFragment();
   bigPictureImage.src = kekstaPost.url;
@@ -50,10 +62,46 @@ const renderbigPicture = (kekstaPost) => {
   bigPictureNumberOfComments.textContent = kekstaPost.comment.length;
   bigPictureDescription.textContent = kekstaPost.description;
   for (let i = 0; i < kekstaPost.comment.length; i++) {
-    allCommentsOfPost.append(renderComment(kekstaPost.comment[i]));
+    const comment = renderComment(kekstaPost.comment[i]);
+    if (i > FIRSTABLE_SHOWN_COMMENTS - 1) {
+      comment.classList.add('hidden');
+    }
+    allCommentsOfPost.append(comment);
   }
+  clearComments();
+  if (kekstaPost.comment.length > FIRSTABLE_SHOWN_COMMENTS - 1) {
+    shownCommentsCount.textContent = FIRSTABLE_SHOWN_COMMENTS;
+  } else {
+    shownCommentsCount.textContent = kekstaPost.comment.length;
+    commentsLoader.classList.add('hidden');
+  }
+
   bigPictureComments.append(allCommentsOfPost);
 };
+
+const hideCommentLoader = () => {
+  commentsLoader.classList.add('hidden');
+};
+
+const onLoadMoreClick = () => {
+  let shownComments = Number(bigPicture.querySelector('.comments-shown').textContent);
+  const allComments = Number(bigPicture.querySelector('.comments-count').textContent);
+  const comments = bigPictureComments.querySelectorAll('.social__comment');
+  if (allComments - shownComments > COMMENTS_TO_SHOW) {
+    shownComments += COMMENTS_TO_SHOW;
+    for (let i = 0; i < shownComments; i++) {
+      comments[i].classList.remove('hidden');
+    }
+  } else {
+    for (let i = 0; i < allComments; i++) {
+      comments[i].classList.remove('hidden');
+      shownComments = allComments;
+      hideCommentLoader();
+    }
+  }
+  shownCommentsCount.textContent = shownComments;
+};
+commentsLoader.addEventListener('click', onLoadMoreClick);
 
 const createKekstaPost = (kekstaPost) => {
   const kekstaPostToRender = kekstaPostTemplate.cloneNode(true);
