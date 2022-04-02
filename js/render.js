@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-
+import { COMMENTS_TO_SHOW, FIRSTABLE_SHOWN_COMMENTS } from './data.js';
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
 const bigPictureNumberOfLikes = bigPicture.querySelector('.likes-count');
@@ -63,14 +63,14 @@ const renderbigPicture = (kekstaPost) => {
   bigPictureDescription.textContent = kekstaPost.description;
   for (let i = 0; i < kekstaPost.comment.length; i++) {
     const comment = renderComment(kekstaPost.comment[i]);
-    if (i > 4){
+    if (i > FIRSTABLE_SHOWN_COMMENTS - 1) {
       comment.classList.add('hidden');
     }
     allCommentsOfPost.append(comment);
   }
   clearComments();
-  if (kekstaPost.comment.length > 4){
-    shownCommentsCount.textContent = 5;
+  if (kekstaPost.comment.length > FIRSTABLE_SHOWN_COMMENTS - 1) {
+    shownCommentsCount.textContent = FIRSTABLE_SHOWN_COMMENTS;
   } else {
     shownCommentsCount.textContent = kekstaPost.comment.length;
     commentsLoader.classList.add('hidden');
@@ -83,25 +83,24 @@ const hideCommentLoader = () => {
   commentsLoader.classList.add('hidden');
 };
 
-
 const onLoadMoreClick = () => {
-  const hiddenComments = bigPictureComments.querySelectorAll('.hidden');
-
-  if (hiddenComments.length > 5) {
-    for (let i = 0; i < 5; i++) {
-      hiddenComments[i].classList.remove('hidden');
+  let shownComments = Number(bigPicture.querySelector('.comments-shown').textContent);
+  const allComments = Number(bigPicture.querySelector('.comments-count').textContent);
+  const comments = bigPictureComments.querySelectorAll('.social__comment');
+  if (allComments - shownComments > COMMENTS_TO_SHOW) {
+    shownComments += COMMENTS_TO_SHOW;
+    for (let i = 0; i < shownComments; i++) {
+      comments[i].classList.remove('hidden');
     }
-    shownCommentsCount.textContent = Number(shownCommentsCount.textContent) + 5;
   } else {
-    for (let i = 0; i < hiddenComments.length; i++) {
-      hiddenComments[i].classList.remove('hidden');
+    for (let i = 0; i < allComments; i++) {
+      comments[i].classList.remove('hidden');
+      shownComments = allComments;
       hideCommentLoader();
     }
-    shownCommentsCount.textContent = Number(shownCommentsCount.textContent) + hiddenComments.length;
   }
-
+  shownCommentsCount.textContent = shownComments;
 };
-
 commentsLoader.addEventListener('click', onLoadMoreClick);
 
 const createKekstaPost = (kekstaPost) => {
