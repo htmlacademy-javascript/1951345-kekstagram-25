@@ -2,6 +2,7 @@
 import {  isEscapeKey } from './util.js';
 import { loadImageToUploadOverlay } from './uploader.js';
 import { validateHashtags } from './validators.js';
+
 const uploadedImage = document.querySelector('.img-upload__input');
 const uploadPreview = document.querySelector('.img-upload__preview');
 const previewImage = uploadPreview.querySelector('img');
@@ -12,6 +13,7 @@ const mainWindow = document.querySelector('body');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const decriptionInput = document.querySelector('.text__description');
 const uploadForm = document.querySelector('.img-upload__form');
+const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'text__hashtags-wrapper',
@@ -42,6 +44,7 @@ const onCancelBtnClick =  () => {
 
 const showImgUploadOverlay =  () => {
   imgUploadOverlay.classList.remove('hidden');
+  imgUploadEffectLevel.classList.add('hidden');
   mainWindow.classList.add('modal-open');
   document.addEventListener('keydown', onEscapeKeyup);
   imgUploadCancelButton.addEventListener('click' , onCancelBtnClick);
@@ -70,4 +73,4 @@ uploadedImage.addEventListener('change', (evt) => {
   fileReader.readAsDataURL(target.files[0]);
 });
 
-export {showImgUploadOverlay};
+export { showImgUploadOverlay, previewImage, imgUploadEffectLevel };
