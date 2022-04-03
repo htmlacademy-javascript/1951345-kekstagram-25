@@ -1,4 +1,4 @@
-import { getRandomArrayElement, getRandomIntegerNumber } from './util.js';
+import { getRandomArrayElement } from './util.js';
 
 const RANDOM_NAMES = [
   'Гена Букин',
@@ -68,37 +68,6 @@ export {
 
 const REG_EXP_FOR_HASHTAGS = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const REG_EXP_FOR_HASHTAGS_ARRAY = /\s+/;
-
-const createCommentsArray = (numberOfComments) => {
-  const comments = [];
-
-  for (let i = 0; i <= numberOfComments - 1; i++) {
-    const comment = {
-      id: i + 1,
-      avatar: `img/avatar-${  getRandomIntegerNumber(1,NUMBER_OF_USERS)  }.svg`,
-      message: getRandomArrayElement(RANDOM_COMMENTS),
-      name: getRandomArrayElement(RANDOM_NAMES)
-    };
-    comments.push(comment);
-  }
-  return comments;
-};
-
-const createKekstaPostsArray = (numberOfPosts) => {
-  const kekstaPostsArray = [];
-
-  for (let i = 0; i <= numberOfPosts - 1; i++){
-    const kekstaPost = {
-      id: i + 1,
-      url: `photos/${ i + 1 }.jpg`,
-      likes: getRandomIntegerNumber(numberOfLikesRange.startFrom,numberOfLikesRange.endOn),
-      description: getRandomArrayElement(RANDOM_DESCRIPTION),
-      comment: createCommentsArray(getRandomIntegerNumber(1,NUMBER_OF_RANDOM_COMMENTS))
-    };
-    kekstaPostsArray.push(kekstaPost);
-  }
-  return kekstaPostsArray;
-};
 
 const SCALE_MIN_SIZE = 0.25;
 const SCALE_MAX_SIZE = 1;
@@ -172,8 +141,6 @@ const photoFilters = {
 export {
   photoFilters,
   getRandomArrayElement,
-  createCommentsArray,
-  createKekstaPostsArray,
   REG_EXP_FOR_HASHTAGS,
   REG_EXP_FOR_HASHTAGS_ARRAY,
   SCALE_MAX_SIZE,
