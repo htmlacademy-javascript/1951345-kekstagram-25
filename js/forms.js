@@ -2,7 +2,8 @@ import { isEscapeKey } from './util.js';
 import { loadImageToUploadOverlay } from './uploader.js';
 import { validateHashtags } from './validators.js';
 import { sendData } from './api.js';
-import { showSuccessMessage, showErrorMessage } from './util.js';
+import { showFinalMessage } from './util.js';
+import { successMessageProps, errorMessageProps } from './data.js';
 const uploadedImage = document.querySelector('.img-upload__input');
 const uploadPreview = document.querySelector('.img-upload__preview');
 const previewImage = uploadPreview.querySelector('img');
@@ -32,10 +33,10 @@ pristine.addValidator(
 
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  if(pristine.validate()){
+  if (pristine.validate()) {
     sendData(
-      showSuccessMessage,
-      showErrorMessage,
+      () => showFinalMessage(successMessageProps),
+      () => showFinalMessage(errorMessageProps),
       new FormData(evt.target),
     );
   }
@@ -79,4 +80,13 @@ uploadedImage.addEventListener('change', (evt) => {
   fileReader.readAsDataURL(target.files[0]);
 });
 
-export { showImgUploadOverlay, previewImage, imgUploadEffectLevel, hashtagsInput, decriptionInput, uploadedImage, imgUploadOverlay };
+export {
+  showImgUploadOverlay,
+  previewImage,
+  imgUploadEffectLevel,
+  hashtagsInput,
+  decriptionInput,
+  uploadedImage,
+  imgUploadOverlay,
+  uploadForm
+};

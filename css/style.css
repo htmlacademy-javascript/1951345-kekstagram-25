@@ -1429,7 +1429,7 @@ main {
   margin-bottom: 20;
 }
 
-.getData__error {
+.get-Data__error {
   position: absolute;
   padding: 15px;
   top: 10px;
@@ -1437,7 +1437,7 @@ main {
   background-color: red;
   border-radius: 10px;
   animation-name: hiding;
-  animation-duration: 10s;
+  animation-duration: 3s;
   animation-iteration-count: 1;
 }
 
