@@ -1,7 +1,8 @@
 import { getDataError } from './util.js';
+import { UPLOAD_URL, DOWNLOAD_URL } from './data.js';
 
 const getData = (onSuccess) => {
-  fetch('https://25.javascript.pages.academy/kekstagram/data')
+  fetch(DOWNLOAD_URL)
     .then((response) => {
       if(response.ok) {
         return response.json();
@@ -20,7 +21,7 @@ const getData = (onSuccess) => {
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    'https://25.javascript.pages.academy/kekstagram',
+    UPLOAD_URL,
     {
       method: 'POST',
       body,
@@ -30,11 +31,14 @@ const sendData = (onSuccess, onFail, body) => {
       if (response.ok) {
         onSuccess();
       } else {
-        onFail('Не удалось отправить форму. Попробуйте еще раз');
+        onFail();
       }
     })
     .catch(() => {
-      onFail('Не удалось отправить форму. Попробуйте еще раз');
+      onFail();
     });
 };
-export { getData, sendData };
+export {
+  getData,
+  sendData
+};
