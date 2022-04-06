@@ -1,6 +1,7 @@
-import { previewImage } from './forms.js';
+import { previewImage, uploadedImage } from './forms.js';
 import { photoFilters, SCALE_MAX_SIZE, SCALE_MIN_SIZE, SCALE_STEP, NON_EFFECT_FIELD_ID } from './data.js';
 import { imgUploadEffectLevel } from './forms.js';
+import { uploadForm } from './forms.js';
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectsList = document.querySelectorAll('.effects__radio');
 const effectLevelValue = document.querySelector('.effect-level__value');
@@ -57,4 +58,12 @@ for(let i = 0; i < effectsList.length; i++){
   });
 }
 
+const returnToDefault = () => {
+  uploadForm.reset();
+  previewImage.style.transform = 'scale(1)';
+  previewImage.style.filter = 'none';
+  uploadedImage.value = '';
+};
+
+export { returnToDefault };
 

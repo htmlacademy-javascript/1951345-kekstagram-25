@@ -1428,6 +1428,27 @@ main {
   color: red;
   margin-bottom: 20;
 }
+
+.get-Data__error {
+  position: absolute;
+  padding: 15px;
+  top: 10px;
+  left: 10px;
+  background-color: red;
+  border-radius: 10px;
+  animation-name: hiding;
+  animation-duration: 3s;
+  animation-iteration-count: 1;
+}
+
+@keyframes hiding {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 @keyframes showing {
   from {
     opacity: 0;

@@ -59,20 +59,20 @@ const renderbigPicture = (kekstaPost) => {
   const allCommentsOfPost = document.createDocumentFragment();
   bigPictureImage.src = kekstaPost.url;
   bigPictureNumberOfLikes.textContent = kekstaPost.likes;
-  bigPictureNumberOfComments.textContent = kekstaPost.comment.length;
+  bigPictureNumberOfComments.textContent = kekstaPost.comments.length;
   bigPictureDescription.textContent = kekstaPost.description;
-  for (let i = 0; i < kekstaPost.comment.length; i++) {
-    const comment = renderComment(kekstaPost.comment[i]);
+  for (let i = 0; i < kekstaPost.comments.length; i++) {
+    const comment = renderComment(kekstaPost.comments[i]);
     if (i > FIRSTABLE_SHOWN_COMMENTS - 1) {
       comment.classList.add('hidden');
     }
     allCommentsOfPost.append(comment);
   }
   clearComments();
-  if (kekstaPost.comment.length > FIRSTABLE_SHOWN_COMMENTS - 1) {
+  if (kekstaPost.comments.length > FIRSTABLE_SHOWN_COMMENTS - 1) {
     shownCommentsCount.textContent = FIRSTABLE_SHOWN_COMMENTS;
   } else {
-    shownCommentsCount.textContent = kekstaPost.comment.length;
+    shownCommentsCount.textContent = kekstaPost.comments.length;
     commentsLoader.classList.add('hidden');
   }
 
@@ -111,7 +111,7 @@ const createKekstaPost = (kekstaPost) => {
   const kekstaPostToRenderLink = kekstaPostToRender.querySelector('a');
   kekstaPostImage.src = kekstaPost.url;
   kekstaPostLikes.textContent = kekstaPost.likes;
-  kekstaPostComments.textContent = kekstaPost.comment.length;
+  kekstaPostComments.textContent = kekstaPost.comments.length;
   kekstaPostToRenderLink.addEventListener('click', (evt) => {
     evt.preventDefault();
     showBigPicture();
@@ -122,7 +122,7 @@ const createKekstaPost = (kekstaPost) => {
 const renderKekstaPosts = (kekstaPosts) => {
   const postsContainer = document.querySelector('.pictures');
   const allKekstaPosts = document.createDocumentFragment();
-  for (let i = 0; i < kekstaPosts.length - 1; i++){
+  for (let i = 0; i < kekstaPosts.length ; i++){
     allKekstaPosts.append(createKekstaPost(kekstaPosts[i]));
   }
   postsContainer.append(allKekstaPosts);
