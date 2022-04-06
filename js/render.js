@@ -1,5 +1,13 @@
-import { isEscapeKey } from './util.js';
-import { COMMENTS_TO_SHOW, FIRSTABLE_SHOWN_COMMENTS } from './data.js';
+import {
+  getRandomIntegerNumber,
+  isEscapeKey } from './util.js';
+import {
+  COMMENTS_TO_SHOW,
+  FIRSTABLE_SHOWN_COMMENTS,
+  NUMBER_OF_RANDOM_POSTS
+} from './data.js';
+import { debounce } from './util.js';
+
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
 const bigPictureNumberOfLikes = bigPicture.querySelector('.likes-count');
@@ -10,6 +18,7 @@ const kekstaPostTemplate = document.querySelector('#picture').content;
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const commentsLoader = bigPicture.querySelector('.social__comments-loader');
 const shownCommentsCount = bigPicture.querySelector('.comments-shown');
+const sortingFilter = document.querySelectorAll('.img-filters__button');
 
 const onCloseBtnClick = () => {
   bigPicture.classList.add('hidden');
@@ -127,5 +136,54 @@ const renderKekstaPosts = (kekstaPosts) => {
   }
   postsContainer.append(allKekstaPosts);
 };
+const randomSorting = (indexA, indexB) => {
+  const newIndexA = getRandomIntegerNumber()+indexA.id;
+  const newIndexB = getRandomIntegerNumber()+indexB.id;
+  return newIndexA - newIndexB;
+};
 
-export {renderKekstaPosts, renderbigPicture};
+const sortByComments = (postA, postB) => postB.comments.length - postA.comments.length;
+
+const clearKekstaPosts = () => {
+  const kekstaPosts = document.querySelectorAll('.picture');
+  for (let i = 0; i < kekstaPosts.length; i++){
+    kekstaPosts[i].remove();
+  }
+};
+
+const reRenderKekstaPosts = (kekstaPost, option) => {
+  clearKekstaPosts();
+  switch(true) {
+    case (option === 'filter-random'):
+      renderKekstaPosts(kekstaPost
+        .slice(0, NUMBER_OF_RANDOM_POSTS)
+        .sort(randomSorting));
+      break;
+    case (option === 'filter-discussed'):
+      renderKekstaPosts(kekstaPost
+        .slice()
+        .sort(sortByComments));
+      break;
+    case (option === 'filter-default'):
+      renderKekstaPosts(kekstaPost);
+      break;
+  }
+};
+const makeFilterVissuallyActive = (clickedFilter) => {
+  for (let j = 0; j < sortingFilter.length; j++){
+    sortingFilter[j].classList.remove('img-filters__button--active');
+  }
+  clickedFilter.classList.add('img-filters__button--active');
+};
+const setFiltersClick = (kekstaposts) => {
+  for (let i = 0; i < sortingFilter.length; i++){
+    sortingFilter[i].addEventListener('click', debounce((evt) => {
+      reRenderKekstaPosts(kekstaposts, evt.target.id);
+    }));
+    sortingFilter[i].addEventListener('click', (evt) => {
+      makeFilterVissuallyActive(evt.target);
+    });
+
+  }
+};
+export {renderKekstaPosts, renderbigPicture, setFiltersClick};

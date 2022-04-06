@@ -1,8 +1,16 @@
-import {REG_EXP_FOR_HASHTAGS_ARRAY, GET_DATA_ERROR_SHOWING_TIME} from './data.js';
+import {
+  RERENDER_DELAY,
+  REG_EXP_FOR_HASHTAGS_ARRAY,
+  GET_DATA_ERROR_SHOWING_TIME,
+  GET_RANDOM_INTEGER_DEFAULT_END,
+  GET_RANDOM_INTEGER_DEFAULT_START
+} from './data.js';
 import { returnToDefault } from './photo_filter.js';
 import { imgUploadOverlay } from './forms.js';
 
-const getRandomIntegerNumber = (startNumber, lastNumber) => {
+const imageFilters = document.querySelector('.img-filters');
+
+const getRandomIntegerNumber = (startNumber = GET_RANDOM_INTEGER_DEFAULT_START, lastNumber = GET_RANDOM_INTEGER_DEFAULT_END) => {
   if (startNumber < 0) {
     throw new Error('Ошибка в функции генерации случайного числа: в параметрах присутствуют числа ниже нуля');
   }
@@ -54,6 +62,18 @@ const showFinalMessage = (messageProps) => {
   document.body.classList.remove('modal-open');
 };
 
+function debounce (callback, timeoutDelay = RERENDER_DELAY) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+const showImageFilters = () => {
+  imageFilters.classList.remove('img-filters--inactive');
+};
+
 export {
   getRandomIntegerNumber,
   checkStringLength,
@@ -61,4 +81,6 @@ export {
   getHashtagsArray,
   isEscapeKey, getDataError,
   showFinalMessage,
+  debounce,
+  showImageFilters
 };

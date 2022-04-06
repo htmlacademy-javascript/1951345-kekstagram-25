@@ -3,7 +3,10 @@ import { loadImageToUploadOverlay } from './uploader.js';
 import { validateHashtags } from './validators.js';
 import { sendData } from './api.js';
 import { showFinalMessage } from './util.js';
-import { successMessageProps, errorMessageProps } from './data.js';
+import {
+  SuccessMessageProps,
+  ErrorMessageProps
+} from './data.js';
 const uploadedImage = document.querySelector('.img-upload__input');
 const uploadPreview = document.querySelector('.img-upload__preview');
 const previewImage = uploadPreview.querySelector('img');
@@ -35,8 +38,8 @@ uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
     sendData(
-      () => showFinalMessage(successMessageProps),
-      () => showFinalMessage(errorMessageProps),
+      () => showFinalMessage(SuccessMessageProps),
+      () => showFinalMessage(ErrorMessageProps),
       new FormData(evt.target),
     );
   }

@@ -12,6 +12,10 @@ const SCALE_MAX_SIZE = 1;
 const SCALE_STEP = 0.25;
 const NON_EFFECT_FIELD_ID = 'effect-none';
 const GET_DATA_ERROR_SHOWING_TIME = 3000;
+const GET_RANDOM_INTEGER_DEFAULT_START = 1;
+const GET_RANDOM_INTEGER_DEFAULT_END = 100;
+const RERENDER_DELAY = 500;
+const NUMBER_OF_RANDOM_POSTS = 10;
 const photoFilters = {
   chrome : {
     name: 'grayscale',
@@ -77,13 +81,13 @@ const photoFilters = {
   }
 };
 
-const successMessageProps = {
+const SuccessMessageProps = {
   TEMPLATE_ID: '#success',
   TEMPLATE_CLASS: '.success',
   CLOSE_BUTTON_CLASS: '.success__button',
   MESSAGE_CONTAINER_CLASS: '.success__inner'
 };
-const errorMessageProps = {
+const ErrorMessageProps = {
   TEMPLATE_ID: '#error',
   TEMPLATE_CLASS: '.error',
   CLOSE_BUTTON_CLASS: '.error__button',
@@ -105,6 +109,10 @@ export {
   DOWNLOAD_URL,
   UPLOAD_URL,
   GET_DATA_ERROR_SHOWING_TIME,
-  successMessageProps,
-  errorMessageProps
+  SuccessMessageProps,
+  ErrorMessageProps,
+  GET_RANDOM_INTEGER_DEFAULT_END,
+  GET_RANDOM_INTEGER_DEFAULT_START,
+  RERENDER_DELAY,
+  NUMBER_OF_RANDOM_POSTS
 };
