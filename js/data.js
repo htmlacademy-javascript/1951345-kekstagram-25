@@ -94,6 +94,12 @@ const ErrorMessageProps = {
   MESSAGE_CONTAINER_CLASS: '.error__inner'
 };
 
+const UserFilterProps = {
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed',
+  DEFAULT: 'filter-default'
+};
+
 export {
   MAX_NUMBER_OF_HASHTAGS,
   FIRSTABLE_SHOWN_COMMENTS,
@@ -114,5 +120,6 @@ export {
   GET_RANDOM_INTEGER_DEFAULT_END,
   GET_RANDOM_INTEGER_DEFAULT_START,
   RERENDER_DELAY,
-  NUMBER_OF_RANDOM_POSTS
+  NUMBER_OF_RANDOM_POSTS,
+  UserFilterProps
 };
