@@ -1,5 +1,8 @@
 import { getDataError } from './util.js';
-import { UPLOAD_URL, DOWNLOAD_URL } from './data.js';
+import { UPLOAD_URL,
+  DOWNLOAD_URL
+} from './data.js';
+import { showImageFilters } from './util.js';
 
 const getData = (onSuccess) => {
   fetch(DOWNLOAD_URL)
@@ -15,6 +18,7 @@ const getData = (onSuccess) => {
     })
     .then((data) => {
       onSuccess(data);
+      showImageFilters();
     });
 
 };
