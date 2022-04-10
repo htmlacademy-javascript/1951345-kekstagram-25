@@ -4,7 +4,8 @@ import {
 import {
   COMMENTS_TO_SHOW,
   FIRSTABLE_SHOWN_COMMENTS,
-  NUMBER_OF_RANDOM_POSTS
+  NUMBER_OF_RANDOM_POSTS,
+  UserFilterProps
 } from './data.js';
 import { debounce } from './util.js';
 
@@ -154,17 +155,17 @@ const clearKekstaPosts = () => {
 const reRenderKekstaPosts = (kekstaPost, option) => {
   clearKekstaPosts();
   switch(true) {
-    case (option === 'filter-random'):
+    case (option === UserFilterProps.RANDOM):
       renderKekstaPosts(kekstaPost
         .slice(0, NUMBER_OF_RANDOM_POSTS)
         .sort(randomSorting));
       break;
-    case (option === 'filter-discussed'):
+    case (option === UserFilterProps.DISCUSSED):
       renderKekstaPosts(kekstaPost
         .slice()
         .sort(sortByComments));
       break;
-    case (option === 'filter-default'):
+    case (option === UserFilterProps.DEFAULT):
       renderKekstaPosts(kekstaPost);
       break;
   }
