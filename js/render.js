@@ -23,6 +23,7 @@ const sortingFilter = document.querySelectorAll('.img-filters__button');
 
 const onCloseBtnClick = () => {
   bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscapeKeydown);
 };
 
@@ -32,6 +33,7 @@ const showCommentLoader = () => {
 
 const showBigPicture = () => {
   bigPicture.classList.remove('hidden');
+  document.body.classList.add('modal-open');
   bigPictureCancel.addEventListener('click', onCloseBtnClick);
   document.addEventListener('keydown', onEscapeKeydown);
   showCommentLoader();
@@ -61,9 +63,7 @@ const renderComment = (comment) => {
 };
 const clearComments = () => {
   const commentsToClear = bigPictureComments.querySelectorAll('li');
-  for (let i = 0; i < commentsToClear.length; i++) {
-    commentsToClear[i].remove();
-  }
+  commentsToClear.forEach((comment) => comment.remove());
 };
 const renderbigPicture = (kekstaPost) => {
   const allCommentsOfPost = document.createDocumentFragment();
@@ -132,9 +132,10 @@ const createKekstaPost = (kekstaPost) => {
 const renderKekstaPosts = (kekstaPosts) => {
   const postsContainer = document.querySelector('.pictures');
   const allKekstaPosts = document.createDocumentFragment();
-  for (let i = 0; i < kekstaPosts.length ; i++){
-    allKekstaPosts.append(createKekstaPost(kekstaPosts[i]));
-  }
+  kekstaPosts.forEach((post) => {
+    allKekstaPosts.append(createKekstaPost(post));
+  });
+
   postsContainer.append(allKekstaPosts);
 };
 const randomSorting = (indexA, indexB) => {
@@ -147,9 +148,7 @@ const sortByComments = (postA, postB) => postB.comments.length - postA.comments.
 
 const clearKekstaPosts = () => {
   const kekstaPosts = document.querySelectorAll('.picture');
-  for (let i = 0; i < kekstaPosts.length; i++){
-    kekstaPosts[i].remove();
-  }
+  kekstaPosts.forEach((post) => post.remove());
 };
 
 const reRenderKekstaPosts = (kekstaPost, option) => {
@@ -171,20 +170,19 @@ const reRenderKekstaPosts = (kekstaPost, option) => {
   }
 };
 const makeFilterVissuallyActive = (clickedFilter) => {
-  for (let j = 0; j < sortingFilter.length; j++){
-    sortingFilter[j].classList.remove('img-filters__button--active');
-  }
+  sortingFilter.forEach((filter) => filter.classList.remove('img-filters__button--active'));
   clickedFilter.classList.add('img-filters__button--active');
 };
+
 const setFiltersClick = (kekstaposts) => {
-  for (let i = 0; i < sortingFilter.length; i++){
-    sortingFilter[i].addEventListener('click', debounce((evt) => {
+  sortingFilter.forEach((filter) => {
+    filter.addEventListener('click', debounce((evt) => {
       reRenderKekstaPosts(kekstaposts, evt.target.id);
     }));
-    sortingFilter[i].addEventListener('click', (evt) => {
+    filter.addEventListener('click', (evt) => {
       makeFilterVissuallyActive(evt.target);
     });
-
-  }
+  });
 };
+
 export {renderKekstaPosts, renderbigPicture, setFiltersClick};

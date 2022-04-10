@@ -7,6 +7,7 @@ import {
   SuccessMessageProps,
   ErrorMessageProps
 } from './data.js';
+import { returnToDefault } from './photo_filter.js';
 const uploadedImage = document.querySelector('.img-upload__input');
 const uploadPreview = document.querySelector('.img-upload__preview');
 const previewImage = uploadPreview.querySelector('img');
@@ -48,7 +49,7 @@ uploadForm.addEventListener('submit', (evt) => {
 const onCancelBtnClick =  () => {
   imgUploadOverlay.classList.add('hidden');
   mainWindow.classList.remove('modal-open');
-  uploadedImage.value = '';
+  returnToDefault();
   document.removeEventListener('keyup', onEscapeKeyup);
 };
 
@@ -56,7 +57,7 @@ const showImgUploadOverlay =  () => {
   imgUploadOverlay.classList.remove('hidden');
   imgUploadEffectLevel.classList.add('hidden');
   mainWindow.classList.add('modal-open');
-  document.addEventListener('keydup', onEscapeKeyup);
+  document.addEventListener('keyup', onEscapeKeyup);
   imgUploadCancelButton.addEventListener('click' , onCancelBtnClick);
 };
 
