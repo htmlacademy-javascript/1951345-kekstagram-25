@@ -47,8 +47,9 @@ const updateFilterSetting = (photoFilter) => {
   sliderElement.noUiSlider.updateOptions(photoFilters[photoFilter]);
   imgUploadEffectLevel.classList.remove('hidden');
 };
-for(let i = 0; i < effectsList.length; i++){
-  effectsList[i].addEventListener('click', (evt) => {
+
+effectsList.forEach((effect) => {
+  effect.addEventListener('click', (evt) => {
     const photoFilter = evt.target.id.split('-')[1];
     updateFilterSetting(photoFilter);
     if (evt.target.id === NON_EFFECT_FIELD_ID){
@@ -56,7 +57,7 @@ for(let i = 0; i < effectsList.length; i++){
       imgUploadEffectLevel.classList.add('hidden');
     }
   });
-}
+});
 
 const returnToDefault = () => {
   uploadForm.reset();
