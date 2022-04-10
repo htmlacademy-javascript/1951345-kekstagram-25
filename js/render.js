@@ -71,13 +71,13 @@ const renderbigPicture = (kekstaPost) => {
   bigPictureNumberOfLikes.textContent = kekstaPost.likes;
   bigPictureNumberOfComments.textContent = kekstaPost.comments.length;
   bigPictureDescription.textContent = kekstaPost.description;
-  for (let i = 0; i < kekstaPost.comments.length; i++) {
-    const comment = renderComment(kekstaPost.comments[i]);
+  kekstaPost.comments.forEach((commentItem, i) => {
+    const comment = renderComment(commentItem);
     if (i > FIRSTABLE_SHOWN_COMMENTS - 1) {
       comment.classList.add('hidden');
     }
     allCommentsOfPost.append(comment);
-  }
+  });
   clearComments();
   if (kekstaPost.comments.length > FIRSTABLE_SHOWN_COMMENTS - 1) {
     shownCommentsCount.textContent = FIRSTABLE_SHOWN_COMMENTS;
