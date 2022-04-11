@@ -5,7 +5,7 @@ import {
   GET_RANDOM_INTEGER_DEFAULT_END,
   GET_RANDOM_INTEGER_DEFAULT_START
 } from './data.js';
-import { returnToDefault } from './photo_filter.js';
+import { returnToDefault } from './photo-filter.js';
 import { imgUploadOverlay } from './forms.js';
 
 const imageFilters = document.querySelector('.img-filters');
@@ -22,11 +22,7 @@ const getRandomIntegerNumber = (startNumber = GET_RANDOM_INTEGER_DEFAULT_START, 
   return Math.floor(Math.random() * (auxLastNumber - auxStartNumber)) + auxStartNumber;
 };
 
-const checkStringLength = (currentString, maxLength) => currentString.length <= maxLength;
-
-function getHashtagsArray (hashtagsString) {
-  return hashtagsString.split(REG_EXP_FOR_HASHTAGS_ARRAY);
-}
+const getHashtagsArray = (hashtagsString) => hashtagsString.split(REG_EXP_FOR_HASHTAGS_ARRAY);
 
 const getRandomArrayElement = (array) => array[getRandomIntegerNumber(0, array.length - 1)];
 
@@ -45,6 +41,22 @@ const closeMessage = (message) => {
   returnToDefault();
 };
 
+const onEscapeKeyupForCloseFinalMessage = (evt) => {
+  if (isEscapeKey(evt)){
+    const successToClose = document.querySelector('.success');
+    const errorToClose = document.querySelector('.error');
+    switch(true) {
+      case successToClose !== null:
+        successToClose.remove();
+        break;
+      case errorToClose !== null:
+        errorToClose.remove();
+        break;
+    }
+    document.removeEventListener('keyup', onEscapeKeyupForCloseFinalMessage);
+  }
+};
+
 const showFinalMessage = (messageProps) => {
   const messageTemplate = document.querySelector(messageProps.TEMPLATE_ID).content;
   const newMesage = messageTemplate.querySelector(messageProps.TEMPLATE_CLASS);
@@ -57,18 +69,19 @@ const showFinalMessage = (messageProps) => {
       closeMessage(message);
     }
   });
+  document.addEventListener('keyup', onEscapeKeyupForCloseFinalMessage);
   document.body.append(message);
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
 };
 
-function debounce (callback, timeoutDelay = RERENDER_DELAY) {
+const debounce = (callback, timeoutDelay = RERENDER_DELAY) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
 const showImageFilters = () => {
   imageFilters.classList.remove('img-filters--inactive');
@@ -76,7 +89,6 @@ const showImageFilters = () => {
 
 export {
   getRandomIntegerNumber,
-  checkStringLength,
   getRandomArrayElement,
   getHashtagsArray,
   isEscapeKey, getDataError,

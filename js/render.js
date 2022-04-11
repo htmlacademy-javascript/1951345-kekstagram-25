@@ -61,10 +61,12 @@ const renderComment = (comment) => {
   commentItem.append(commentText);
   return commentItem;
 };
+
 const clearComments = () => {
   const commentsToClear = bigPictureComments.querySelectorAll('li');
   commentsToClear.forEach((comment) => comment.remove());
 };
+
 const renderbigPicture = (kekstaPost) => {
   const allCommentsOfPost = document.createDocumentFragment();
   bigPictureImage.src = kekstaPost.url;
@@ -111,7 +113,6 @@ const onLoadMoreClick = () => {
   }
   shownCommentsCount.textContent = shownComments;
 };
-commentsLoader.addEventListener('click', onLoadMoreClick);
 
 const createKekstaPost = (kekstaPost) => {
   const kekstaPostToRender = kekstaPostTemplate.cloneNode(true);
@@ -129,15 +130,16 @@ const createKekstaPost = (kekstaPost) => {
   });
   return kekstaPostToRender;
 };
+
 const renderKekstaPosts = (kekstaPosts) => {
   const postsContainer = document.querySelector('.pictures');
   const allKekstaPosts = document.createDocumentFragment();
   kekstaPosts.forEach((post) => {
     allKekstaPosts.append(createKekstaPost(post));
   });
-
   postsContainer.append(allKekstaPosts);
 };
+
 const randomSorting = (indexA, indexB) => {
   const newIndexA = getRandomIntegerNumber()+indexA.id;
   const newIndexB = getRandomIntegerNumber()+indexB.id;
@@ -169,7 +171,8 @@ const reRenderKekstaPosts = (kekstaPost, option) => {
       break;
   }
 };
-const makeFilterVissuallyActive = (clickedFilter) => {
+
+const makeFilterVisuallyActive = (clickedFilter) => {
   sortingFilter.forEach((filter) => filter.classList.remove('img-filters__button--active'));
   clickedFilter.classList.add('img-filters__button--active');
 };
@@ -178,11 +181,11 @@ const setFiltersClick = (kekstaposts) => {
   sortingFilter.forEach((filter) => {
     filter.addEventListener('click', debounce((evt) => {
       reRenderKekstaPosts(kekstaposts, evt.target.id);
+      makeFilterVisuallyActive(evt.target);
     }));
-    filter.addEventListener('click', (evt) => {
-      makeFilterVissuallyActive(evt.target);
-    });
   });
 };
+
+commentsLoader.addEventListener('click', onLoadMoreClick);
 
 export {renderKekstaPosts, renderbigPicture, setFiltersClick};

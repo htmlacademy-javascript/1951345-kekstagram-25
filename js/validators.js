@@ -1,7 +1,7 @@
 import { MAX_NUMBER_OF_HASHTAGS, REG_EXP_FOR_HASHTAGS } from './data.js';
 import {getHashtagsArray} from './util.js';
 
-function validateHashtagsText (hashtags) {
+const validateHashtagsText = (hashtags) => {
   if(hashtags.length === 1 && !hashtags[0]) {
     return false;
   }
@@ -10,15 +10,14 @@ function validateHashtagsText (hashtags) {
       return true;
     }
   }
-}
-function validateSimilarHashtags (hashtagsArray) {
+};
+
+const validateSimilarHashtags = (hashtagsArray) => {
   const setOfHashtags = new Set(hashtagsArray);
   return setOfHashtags.size === hashtagsArray.length;
-}
+};
 
-function validateNumberOfHashtags (hashtagsArray) {
-  return hashtagsArray.length > MAX_NUMBER_OF_HASHTAGS;
-}
+const validateNumberOfHashtags = (hashtagsArray) => hashtagsArray.length > MAX_NUMBER_OF_HASHTAGS;
 
 const validateHashtags = (value) => {
   const hashtags = getHashtagsArray(value);
