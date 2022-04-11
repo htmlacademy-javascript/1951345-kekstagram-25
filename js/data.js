@@ -80,7 +80,6 @@ const photoFilters = {
     }
   }
 };
-
 const SuccessMessageProps = {
   TEMPLATE_ID: '#success',
   TEMPLATE_CLASS: '.success',
@@ -93,7 +92,6 @@ const ErrorMessageProps = {
   CLOSE_BUTTON_CLASS: '.error__button',
   MESSAGE_CONTAINER_CLASS: '.error__inner'
 };
-
 const UserFilterProps = {
   RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed',

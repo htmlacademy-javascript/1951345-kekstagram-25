@@ -7,7 +7,8 @@ import {
   SuccessMessageProps,
   ErrorMessageProps
 } from './data.js';
-import { returnToDefault } from './photo_filter.js';
+import { returnToDefault } from './photo-filter.js';
+
 const uploadedImage = document.querySelector('.img-upload__input');
 const uploadPreview = document.querySelector('.img-upload__preview');
 const previewImage = uploadPreview.querySelector('img');
@@ -19,7 +20,6 @@ const hashtagsInput = document.querySelector('.text__hashtags');
 const decriptionInput = document.querySelector('.text__description');
 const uploadForm = document.querySelector('.img-upload__form');
 const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
-
 const pristine = new Pristine(uploadForm, {
   classTo: 'text__hashtags-wrapper',
   errorClass: 'form__item--invalid',
@@ -27,23 +27,6 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'text__hashtags-wrapper',
   errorTextTag: 'span',
   errorTextClass: 'form__error'
-});
-
-pristine.addValidator(
-  hashtagsInput,
-  validateHashtags,
-  'Нарушены правила заполнения полей хэштега'
-);
-
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    sendData(
-      () => showFinalMessage(SuccessMessageProps),
-      () => showFinalMessage(ErrorMessageProps),
-      new FormData(evt.target),
-    );
-  }
 });
 
 const onCancelBtnClick =  () => {
@@ -82,6 +65,23 @@ uploadedImage.addEventListener('change', (evt) => {
     loadImageToUploadOverlay(previewImage, fileReader, effectsImagesList);
   });
   fileReader.readAsDataURL(target.files[0]);
+});
+
+pristine.addValidator(
+  hashtagsInput,
+  validateHashtags,
+  'Нарушены правила заполнения полей хэштега'
+);
+
+uploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  if (pristine.validate()) {
+    sendData(
+      () => showFinalMessage(SuccessMessageProps),
+      () => showFinalMessage(ErrorMessageProps),
+      new FormData(evt.target),
+    );
+  }
 });
 
 export {

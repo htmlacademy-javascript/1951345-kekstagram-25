@@ -2,13 +2,29 @@ import { previewImage, uploadedImage } from './forms.js';
 import { photoFilters, SCALE_MAX_SIZE, SCALE_MIN_SIZE, SCALE_STEP, NON_EFFECT_FIELD_ID } from './data.js';
 import { imgUploadEffectLevel } from './forms.js';
 import { uploadForm } from './forms.js';
+
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectsList = document.querySelectorAll('.effects__radio');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const scaleSmallerButton = document.querySelector('.scale__control--smaller');
 const scaleBiggerButton = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
+
 let scale = 1;
+
+const updateFilterSetting = (photoFilter) => {
+  previewImage.style.filter = 'none';
+  photoFilters.property = photoFilters[photoFilter].name;
+  sliderElement.noUiSlider.updateOptions(photoFilters[photoFilter]);
+  imgUploadEffectLevel.classList.remove('hidden');
+};
+
+const returnToDefault = () => {
+  uploadForm.reset();
+  previewImage.style.transform = 'scale(1)';
+  previewImage.style.filter = 'none';
+  uploadedImage.value = '';
+};
 
 scaleBiggerButton.addEventListener('click', () => {
   if(scale < SCALE_MAX_SIZE){
@@ -41,13 +57,6 @@ sliderElement.noUiSlider.on('update', () => {
   effectLevelValue.value = sliderElement.noUiSlider.get();
 });
 
-const updateFilterSetting = (photoFilter) => {
-  previewImage.style.filter = 'none';
-  photoFilters.property = photoFilters[photoFilter].name;
-  sliderElement.noUiSlider.updateOptions(photoFilters[photoFilter]);
-  imgUploadEffectLevel.classList.remove('hidden');
-};
-
 effectsList.forEach((effect) => {
   effect.addEventListener('click', (evt) => {
     const photoFilter = evt.target.id.split('-')[1];
@@ -58,13 +67,6 @@ effectsList.forEach((effect) => {
     }
   });
 });
-
-const returnToDefault = () => {
-  uploadForm.reset();
-  previewImage.style.transform = 'scale(1)';
-  previewImage.style.filter = 'none';
-  uploadedImage.value = '';
-};
 
 export { returnToDefault };
 
